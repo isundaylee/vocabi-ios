@@ -7,13 +7,66 @@
 //
 
 #import "VBAppDelegate.h"
+#import "VBWelcomeViewController.h"
+#import "VBWordlistViewController.h"
+#import "VBSearchViewController.h"
+#import "VBNotebookViewController.h"
+#import "VBConnection.h"
+#import "VBWordStore.h"
 
 @implementation VBAppDelegate
+
+- (UINavigationController *)wrapInNavigationController:(UIViewController *)vc withTitle:(NSString *)title image:(UIImage *)image
+{
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    UITabBarItem *tbi = [nc tabBarItem];
+    [tbi setTitle:title];
+    [tbi setImage:image];
+    
+    return nc; 
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    
+    // Handling Updates
+    
+    VBWordStore *store = [VBWordStore sharedStore];
+    
+    if ([store applyUpdate]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Wordlists Updated" message:@"The wordlists have been updated to the newest version! " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show]; 
+    }
+    
+    [store fetchUpdateOnCompletion:^(Boolean updated) {
+        if (!updated) NSLog(@"Version up-to-date! ");
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Wordlists Update Fetched" message:@"Wordlists update has been fetched from the server and will be installed the next time you completely restart the app. " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+    
+    // Creating views controllers
+    
+    _tbc = [[UITabBarController alloc] init];
+    
+    _wevc = [[VBWelcomeViewController alloc] init];
+    [_tbc addChildViewController:[self wrapInNavigationController:_wevc withTitle:@"Welcome" image:[UIImage imageNamed:@"Home"]]];
+    
+    _wlvc = [[VBWordlistViewController alloc] init];
+    [_tbc addChildViewController:[self wrapInNavigationController:_wlvc withTitle:@"Wordlists" image:[UIImage imageNamed:@"List"]]];
+    
+    _svc = [[VBSearchViewController alloc] init];
+    [_tbc addChildViewController:[self wrapInNavigationController:_svc withTitle:@"Search" image:[UIImage imageNamed:@"Search"]]];
+    
+    _nvc = [[VBNotebookViewController alloc] init];
+    [_tbc addChildViewController:[self wrapInNavigationController:_nvc withTitle:@"Notebook" image:[UIImage imageNamed:@"Note"]]]; 
+    
+    [[self window] setRootViewController:_tbc];
+    
+    // Tests
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

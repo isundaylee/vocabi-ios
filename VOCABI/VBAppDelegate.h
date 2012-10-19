@@ -8,7 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class VBWelcomeViewController;
+@class VBWordlistViewController;
+@class VBSearchViewController;
+@class VBNotebookViewController; 
+
 @interface VBAppDelegate : UIResponder <UIApplicationDelegate>
+{
+    UITabBarController *_tbc;
+    VBWelcomeViewController *_wevc;
+    VBWordlistViewController *_wlvc;
+    VBSearchViewController *_svc;
+    VBNotebookViewController *_nvc;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

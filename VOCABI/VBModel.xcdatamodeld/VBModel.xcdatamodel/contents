@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="VBWord" representedClassName="VBWord" syncable="YES">
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="meaning" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ps" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sample" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="word" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="wordlist" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="VBWordlist" inverseName="words" inverseEntity="VBWordlist" syncable="YES"/>
+    </entity>
+    <entity name="VBWordlist" representedClassName="VBWordlist" syncable="YES">
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VBWord" inverseName="wordlist" inverseEntity="VBWord" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="VBWord" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="VBWordlist" positionX="0" positionY="0" width="128" height="75"/>
+    </elements>
+</model>
