@@ -26,6 +26,8 @@
 - (void)uploadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSString *passcode, NSError *error))block;
 - (void)downloadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSError *error))block;
 
+- (NSInteger)purgeNotebook;
+
 @property (nonatomic, readonly) NSMutableArray *allWords;
 @property (nonatomic, readonly) NSMutableArray *allWordlists;
 @property (nonatomic, readonly) NSMutableArray *notedWords;

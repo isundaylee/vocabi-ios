@@ -19,12 +19,7 @@ NSString * const VBWordStoreVersionPrefKey = @"VBWordStoreVersionPrefKey";
 NSString * const VBWordStoreLastCheckVersionPrefKey = @"VBWordStoreLastCheckVersionPrefKey";
 NSString * const VBWordStoreNotedWordsPrefKey = @"VBWordStoreNotedWordsPrefKey";
 
-NSString * const VBWordStoreRemotePathUpdate = @"http://ljh.me/vocabi-server/collected.json"; 
-NSString * const VBWordStoreRemotePathVersion = @"http://ljh.me/vocabi-server/version.php";
-NSString * const VBWordStoreRemotePathUploadNotebook = @"http://localhost/~Sunday/vocabi-server/upload.php";
-NSString * const VBWordStoreRemotePathDownloadNotebook = @"http://localhost/~Sunday/vocabi-server/download.php";
-
-NSString * const VBWordStoreHTTPBaseURL = @"http://ljh.me/vocabi-server/";
+NSString * const VBWordStoreRemoteBaseURL = @"http://localhost/~Sunday/vocabi-server/";
 
 NSString * const VBWordStoreErrorDomain = @"com.sunday.VOCABI.WordStore";
 
@@ -178,7 +173,7 @@ typedef enum {
         [_context setPersistentStoreCoordinator:psc];
         [_context setUndoManager:nil];
         
-        _httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:VBWordStoreHTTPBaseURL]];
+        _httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:VBWordStoreRemoteBaseURL]];
         
         _requestOperationQueue = [[NSOperationQueue alloc] init]; 
         
@@ -434,6 +429,21 @@ typedef enum {
     }];
     
     [_requestOperationQueue addOperation:operation];
+}
+
+- (NSInteger)purgeNotebook
+{
+    NSInteger count = 0;
+    NSMutableArray *purged = [NSMutableArray array];
+    
+    for (NSString *uid in _notedWords) {
+        if ([self wordWithUID:uid]) [purged addObject:uid];
+        else count++;
+    }
+    
+    _notedWords = purged;
+    
+    return count; 
 }
 
 @end

@@ -37,6 +37,18 @@
     
     if ([store applyUpdate]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Wordlists Updated" message:@"The wordlists have been updated to the newest version! " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        NSInteger purged = [store purgeNotebook];
+        if (purged > 0) {
+            NSString *message;
+            if (purged == 1) {
+                message = [NSString stringWithFormat:@"%d word has been removed from your notebook because it is not found in the wordlists. ", purged];
+            } else {
+                message = [NSString stringWithFormat:@"%d words have been removed from your notebook because they are not found in the wordlists. ", purged];
+            }
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notebook Changed" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+        NSLog(@"Info: %d item(s) purged after vocabulary update. ", purged);
         [alert show]; 
     }
     

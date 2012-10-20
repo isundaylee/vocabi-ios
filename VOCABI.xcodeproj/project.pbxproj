@@ -255,7 +255,6 @@
 				15C87CB516325C060001E4F2 /* VBTextFieldCell.h */,
 				15C87CB816325C940001E4F2 /* VBTextFieldCell.xib */,
 				15C87CB616325C060001E4F2 /* VBTextFieldCell.m */,
-				152A14E616326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -265,6 +264,7 @@
 			children = (
 				15C87CA41632327F0001E4F2 /* VBSyncViewController.h */,
 				15C87CA51632327F0001E4F2 /* VBSyncViewController.m */,
+				152A14E616326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib */,
 				15168C851630D7A9003787CF /* VBNotebookViewController.h */,
 				15168C861630D7A9003787CF /* VBNotebookViewController.m */,
 				15168C651630B85F003787CF /* VBCarouselViewController.h */,
@@ -561,8 +561,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VOCABI/VOCABI-Prefix.pch";
 				INFOPLIST_FILE = "VOCABI/VOCABI-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -574,8 +576,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VOCABI/VOCABI-Prefix.pch";
 				INFOPLIST_FILE = "VOCABI/VOCABI-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
