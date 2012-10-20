@@ -13,6 +13,7 @@
 #import "VBNotebookViewController.h"
 #import "VBConnection.h"
 #import "VBWordStore.h"
+#import "VBSyncViewController.h"
 
 @implementation VBAppDelegate
 
@@ -39,8 +40,13 @@
         [alert show]; 
     }
     
-    [store fetchUpdateOnCompletion:^(Boolean updated) {
-        if (!updated) NSLog(@"Version up-to-date! ");
+    [store fetchUpdateOnCompletion:^(Boolean updated, NSError *error) {
+        if (error) {
+            NSLog(@"Info: Abort fetching update due to networking error. Detail: %@", [error localizedDescription]);
+            return;
+        }
+        
+        if (!updated) NSLog(@"Info: Version up-to-date! ");
         else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Wordlists Update Fetched" message:@"Wordlists update has been fetched from the server and will be installed the next time you completely restart the app. " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
@@ -61,7 +67,10 @@
     [_tbc addChildViewController:[self wrapInNavigationController:_svc withTitle:@"Search" image:[UIImage imageNamed:@"Search"]]];
     
     _nvc = [[VBNotebookViewController alloc] init];
-    [_tbc addChildViewController:[self wrapInNavigationController:_nvc withTitle:@"Notebook" image:[UIImage imageNamed:@"Note"]]]; 
+    [_tbc addChildViewController:[self wrapInNavigationController:_nvc withTitle:@"Notebook" image:[UIImage imageNamed:@"Note"]]];
+    
+    _syvc = [[VBSyncViewController alloc] init];
+    [_tbc addChildViewController:[self wrapInNavigationController:_syvc withTitle:@"Sync" image:[UIImage imageNamed:@"Sync"]]];
     
     [[self window] setRootViewController:_tbc];
     

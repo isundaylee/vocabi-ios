@@ -11,6 +11,9 @@
 #import "CoreData/CoreData.h"
 #import "VBWordlist.h"
 #import "VBWord.h"
+#import "AFHTTPClient.h"
+#import "AFHTTPRequestOperation.h"
+#import "AFJSONRequestOperation.h"
 
 NSString * const VBWordStoreVersionPrefKey = @"VBWordStoreVersionPrefKey";
 NSString * const VBWordStoreLastCheckVersionPrefKey = @"VBWordStoreLastCheckVersionPrefKey";
@@ -18,6 +21,29 @@ NSString * const VBWordStoreNotedWordsPrefKey = @"VBWordStoreNotedWordsPrefKey";
 
 NSString * const VBWordStoreRemotePathUpdate = @"http://ljh.me/vocabi-server/collected.json"; 
 NSString * const VBWordStoreRemotePathVersion = @"http://ljh.me/vocabi-server/version.php";
+NSString * const VBWordStoreRemotePathUploadNotebook = @"http://localhost/~Sunday/vocabi-server/upload.php";
+NSString * const VBWordStoreRemotePathDownloadNotebook = @"http://localhost/~Sunday/vocabi-server/download.php";
+
+NSString * const VBWordStoreHTTPBaseURL = @"http://ljh.me/vocabi-server/";
+
+NSString * const VBWordStoreErrorDomain = @"com.sunday.VOCABI.WordStore";
+
+typedef enum {
+    VBWordStoreInvalidPasscode = -1000,
+    VBWordStoreNotebookUploadingError,
+    VBWordStoreNotebookDownloadingError
+} VBWordStoreErrorCode; 
+
+@interface VBWordStore ()
+{
+    NSManagedObjectModel *_model;
+    NSManagedObjectContext *_context;
+    
+    AFHTTPClient *_httpClient;
+    NSOperationQueue *_requestOperationQueue; 
+}
+
+@end
 
 @implementation VBWordStore
 
@@ -38,9 +64,9 @@ NSString * const VBWordStoreRemotePathVersion = @"http://ljh.me/vocabi-server/ve
 {
     if ([self isNoted:word]) {
         NSLog(@"Warning: Noting already noted word. Probable logic hole. ");
-        return; 
+        return;
     }
-    [_notedWords addObject:[word uid]];
+    [_notedWords addObject:[[word uid] copy]];
     [self reportNotedWordsUpdate];
 }
 
@@ -53,6 +79,7 @@ NSString * const VBWordStoreRemotePathVersion = @"http://ljh.me/vocabi-server/ve
 - (Boolean) isNoted:(VBWord *)word
 {
     return [_notedWords containsObject:[word uid]];
+    
 }
 
 - (NSMutableArray *)allWordlists
@@ -151,6 +178,10 @@ NSString * const VBWordStoreRemotePathVersion = @"http://ljh.me/vocabi-server/ve
         [_context setPersistentStoreCoordinator:psc];
         [_context setUndoManager:nil];
         
+        _httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:VBWordStoreHTTPBaseURL]];
+        
+        _requestOperationQueue = [[NSOperationQueue alloc] init]; 
+        
         [self reloadAllWords];
         [self reloadAllWordlists];
         
@@ -164,52 +195,57 @@ NSString * const VBWordStoreRemotePathVersion = @"http://ljh.me/vocabi-server/ve
     return self;
 }
 
-- (void)checkForUpdateOnCompletion:(void (^)(Boolean, NSNumber *))block
+- (void)checkForUpdateOnCompletion:(void (^)(Boolean, NSNumber *, NSError *error))block
 {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:VBWordStoreRemotePathVersion]];
-    VBConnection *connection = [[VBConnection alloc] initWithRequest:request];
-    [connection setCompletionBlock:^void(NSData *data, NSError *error){
-        if (error) {
-            // [NSException raise:@"Connection failed" format:@"Reason: %@", [error localizedDescription]];
-            NSLog(@"Info: Exception during fetching update, ignored. "); 
+    NSMutableURLRequest *request = [_httpClient requestWithMethod:@"GET" path:@"version.php" parameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = (NSData *)responseObject;
+        NSString *versionString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        NSNumber *version = [f numberFromString:versionString];
+        NSNumber *now = [[NSUserDefaults standardUserDefaults] objectForKey:VBWordStoreVersionPrefKey];
+        if ([version intValue] > [now intValue]) {
+            if (block) block(YES, version, nil);
         } else {
-            NSString *str=  [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-            [f setNumberStyle:NSNumberFormatterDecimalStyle];
-            NSNumber *n = [f numberFromString:str];
-            NSNumber *now = [[NSUserDefaults standardUserDefaults] objectForKey:VBWordStoreVersionPrefKey];
-            if ([n intValue] > [now intValue]) {
-                if (block) block(YES, n);
-            } else {
-                if (block) block(NO, nil);
-            }
+            if (block) block(NO, nil, nil);
         }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) block(NO, nil, error); 
     }];
-    [connection start]; 
+    
+    [_requestOperationQueue addOperation:operation];
 }
 
-- (void)fetchUpdateOnCompletion:(void (^)(Boolean))block
+- (void)fetchUpdateOnCompletion:(void (^)(Boolean updated, NSError *error))block
 {
-    [self checkForUpdateOnCompletion:^(Boolean updated, NSNumber *newVersion) {
+    [self checkForUpdateOnCompletion:^(Boolean updated, NSNumber *newVersion, NSError *error) {
+        if (error) {
+            if (block) block(NO, error);
+            return;
+        }
+        
         if (!updated) {
-            if (block) block(NO);
+            if (block) block(NO, nil);
         } else {
-            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:VBWordStoreRemotePathUpdate]];
-            VBConnection *connection = [[VBConnection alloc] initWithRequest:request];
-            [connection setCompletionBlock:^(NSData *data, NSError *error) {
-                if (error) {
-                    // [NSException raise:@"Connection failed" format:@"Reason: %@", [error localizedDescription]];
-                    NSLog(@"Info: Exception during fetching update, ignored. ");
-                } else {
-                    NSString *cachePath = [self updateCachePath];
-                    [data writeToFile:cachePath atomically:YES];
-                    [[NSUserDefaults standardUserDefaults] setObject:newVersion forKey:VBWordStoreLastCheckVersionPrefKey];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    if (block) block(YES);
-                }
-            }];
-            [connection start];
+            NSMutableURLRequest *request = [_httpClient requestWithMethod:@"GET" path:@"collected.json" parameters:nil];
+            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
             
+            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSData *data = (NSData *)responseObject;
+                NSString *cachePath = [self updateCachePath];
+                [data writeToFile:cachePath atomically:YES];
+                [[NSUserDefaults standardUserDefaults] setObject:newVersion forKey:VBWordStoreLastCheckVersionPrefKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                if (block) block(YES, nil);
+
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                if (block) block(NO, error);
+            }];
+            
+            [_requestOperationQueue addOperation:operation];          
         }
     }];
 }
@@ -309,6 +345,95 @@ NSString * const VBWordStoreRemotePathVersion = @"http://ljh.me/vocabi-server/ve
     } else {
         _allWordlists = [[NSMutableArray alloc] initWithArray:result]; 
     }
+}
+
+- (Boolean)isPasscodeValid:(NSString *)passcode
+{
+    NSString *allowedString = @"0123456789ABCDEF";
+    
+    if ([passcode length] != 8) return NO;
+    for (int i=0; i<[passcode length]; i++) {
+        Boolean flag = NO;
+        for (int j=0; j<[allowedString length]; j++) {
+            if ([allowedString characterAtIndex:j] == [passcode characterAtIndex:i]) flag = YES;
+            if (flag) break;
+        }
+        if (!flag) return NO;
+    }
+    
+    return YES;
+}
+
+- (void)uploadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSString *passcode, NSError *error))block
+{
+    if (!passcode) passcode = @""; 
+    
+    if (!([passcode isEqualToString:@""] || [self isPasscodeValid:passcode])) {
+        if (block) {
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:@"The passcode supplied is invalid. For first-time sync, leave the passcode blank. " forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreInvalidPasscode userInfo:dict];
+            block(nil, error);
+        }
+        return;
+    }
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_notedWords];
+    NSString *content = [data base64EncodedString];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:passcode, @"passcode", content, @"content", nil];
+    NSMutableURLRequest *request = [_httpClient requestWithMethod:@"POST" path:@"upload.php" parameters:dict];
+    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
+
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *result = (NSDictionary *)responseObject;
+        NSNumber *number = [result objectForKey:@"result"];
+        if ([number intValue] != 1) {
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[result objectForKey:@"error"] forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreNotebookUploadingError userInfo:dict];
+            if (block) block(nil, error);
+        } else {
+            NSString *passcode = [result objectForKey:@"passcode"];
+            if (block) block(passcode, nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) block(nil, error);
+    }];
+    
+    [_requestOperationQueue addOperation:operation]; 
+}
+
+- (void)downloadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSError *))block
+{
+    if (![self isPasscodeValid:passcode]) {
+        if (block) {
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:@"The passcode supplied is invalid. " forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreInvalidPasscode userInfo:dict];
+            block(error);
+        }
+        return;
+    }
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:passcode forKey:@"passcode"];
+    NSMutableURLRequest *request = [_httpClient requestWithMethod:@"POST" path:@"download.php" parameters:dict];
+    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *result = (NSDictionary *)responseObject;
+        NSNumber *retcode = [result objectForKey:@"result"];
+        if ([retcode intValue] != 1) {
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[result objectForKey:@"error"] forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreNotebookDownloadingError userInfo:dict];
+            if (block) block(error);
+        } else {
+            NSString *content = [result objectForKey:@"content"];
+            NSData *data = [NSData dataFromBase64String:content];
+            _notedWords = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [self reportNotedWordsUpdate];
+            if (block) block(nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) block(error);
+    }];
+    
+    [_requestOperationQueue addOperation:operation];
 }
 
 @end

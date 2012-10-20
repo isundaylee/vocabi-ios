@@ -11,6 +11,9 @@
 #import "VBWordStore.h"
 
 @interface VBCarouselViewController ()
+{
+    NSMutableArray *_words; 
+}
 
 @end
 

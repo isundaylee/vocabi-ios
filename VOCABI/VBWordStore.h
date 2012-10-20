@@ -11,18 +11,20 @@
 @class VBWord; 
 
 @interface VBWordStore : NSObject
-{
-    NSManagedObjectModel *_model;
-    NSManagedObjectContext *_context;
-}
 
 + (VBWordStore *)sharedStore;
-- (void)fetchUpdateOnCompletion:(void (^)(Boolean))block;
+
+- (void)fetchUpdateOnCompletion:(void (^)(Boolean updated, NSError *error))block; 
 - (Boolean)applyUpdate;
-- (void)unnoteWord:(VBWord *)word; 
+
+- (void)unnoteWord:(VBWord *)word;
 - (void)noteWord:(VBWord *)word;
 - (Boolean)isNoted:(VBWord *)word;
-- (VBWord *)wordWithUID:(NSString *)uid; 
+
+- (VBWord *)wordWithUID:(NSString *)uid;
+
+- (void)uploadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSString *passcode, NSError *error))block;
+- (void)downloadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSError *error))block;
 
 @property (nonatomic, readonly) NSMutableArray *allWords;
 @property (nonatomic, readonly) NSMutableArray *allWordlists;

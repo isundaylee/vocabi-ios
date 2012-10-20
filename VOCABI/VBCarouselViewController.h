@@ -10,9 +10,6 @@
 #import "iCarousel.h"
 
 @interface VBCarouselViewController : UIViewController <iCarouselDataSource, iCarouselDelegate>
-{
-    NSMutableArray *_words;
-}
 
 @property (weak, nonatomic) IBOutlet iCarousel *carousel;
 
