@@ -110,4 +110,9 @@
     }
 }
 
+- (CGFloat)carouselItemWidth:(iCarousel *)carousel
+{
+    return self.view.bounds.size.width; 
+}
+
 @end
