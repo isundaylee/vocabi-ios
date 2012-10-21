@@ -158,8 +158,16 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
 
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
-            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(120, 12, 170, 30)];
+            CGRect rect; 
+            if (IS_IPAD) {
+                rect = CGRectMake(120, 12, 540, 30);
+            } else {
+                rect = CGRectMake(120, 12, 170, 30); 
+            }
+            UITextField *textField = [[UITextField alloc] initWithFrame:rect];
             [textField setTag:VBTextFieldCellTextFieldTag];
+            [textField setReturnKeyType:UIReturnKeyDone];
+            [textField setDelegate:self];
             [cell.contentView addSubview:textField];
         }
         

@@ -13,3 +13,5 @@
     #import <Foundation/Foundation.h>
     #import "NSData+Base64.h"
 #endif
+
+#define IS_IPAD ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)

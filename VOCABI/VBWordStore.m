@@ -19,7 +19,7 @@ NSString * const VBWordStoreVersionPrefKey = @"VBWordStoreVersionPrefKey";
 NSString * const VBWordStoreLastCheckVersionPrefKey = @"VBWordStoreLastCheckVersionPrefKey";
 NSString * const VBWordStoreNotedWordsPrefKey = @"VBWordStoreNotedWordsPrefKey";
 
-NSString * const VBWordStoreRemoteBaseURL = @"http://localhost/~Sunday/vocabi-server/";
+NSString * const VBWordStoreRemoteBaseURL = @"http://ljh.me/vocabi-server/";
 
 NSString * const VBWordStoreErrorDomain = @"com.sunday.VOCABI.WordStore";
 

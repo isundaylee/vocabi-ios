@@ -46,7 +46,7 @@
     [self carousel].type = iCarouselTypeLinear;
     [self carousel].bounceDistance = 0.1;
     [self carousel].scrollSpeed = 0.3;
-    [self carousel].decelerationRate = 0.1; 
+    [self carousel].decelerationRate = 0.1;
 }
 
 - (void)viewDidUnload
@@ -57,9 +57,9 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [self.carousel reloadData]; 
 }
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
@@ -81,10 +81,6 @@
     return cardView;
 }
 
-- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
-{
-}
-
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel
 {
     self.navigationItem.title = [NSString stringWithFormat:@"%d/%d", [carousel currentItemIndex] + 1, [_words count]];
@@ -103,6 +99,15 @@
     if ([store isNoted:word]) [store unnoteWord:word];
     else [store noteWord:word];
     [self carouselDidEndScrollingAnimation:[self carousel]]; 
+}
+
+- (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
+{
+    if (option == iCarouselOptionWrap) {
+        return 1;
+    } else {
+        return value;
+    }
 }
 
 @end
