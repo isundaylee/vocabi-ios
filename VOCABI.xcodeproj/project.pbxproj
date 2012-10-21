@@ -37,7 +37,6 @@
 		15168C871630D7A9003787CF /* VBNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15168C861630D7A9003787CF /* VBNotebookViewController.m */; };
 		15168C891630D86A003787CF /* Note.png in Resources */ = {isa = PBXBuildFile; fileRef = 15168C881630D86A003787CF /* Note.png */; };
 		15168C8B1630D878003787CF /* Note@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15168C8A1630D878003787CF /* Note@2x.png */; };
-		152A14E716326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 152A14E616326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib */; };
 		15C87C6916311C090001E4F2 /* factory.json in Resources */ = {isa = PBXBuildFile; fileRef = 15C87C6816311C090001E4F2 /* factory.json */; };
 		15C87C6D163125410001E4F2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87C6B163125410001E4F2 /* Icon.png */; };
 		15C87C6E163125410001E4F2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87C6C163125410001E4F2 /* Icon@2x.png */; };
@@ -56,8 +55,6 @@
 		15C87CAA1632395D0001E4F2 /* Sync.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87CA91632395D0001E4F2 /* Sync.png */; };
 		15C87CAC1632396E0001E4F2 /* Sync@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87CAB1632396E0001E4F2 /* Sync@2x.png */; };
 		15C87CB016323F340001E4F2 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C87CAF16323DB90001E4F2 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		15C87CB716325C070001E4F2 /* VBTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C87CB616325C060001E4F2 /* VBTextFieldCell.m */; };
-		15C87CB916325C940001E4F2 /* VBTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15C87CB816325C940001E4F2 /* VBTextFieldCell.xib */; };
 		15D9982C163096850013815E /* VBWordlistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D9982B163096840013815E /* VBWordlistViewController.m */; };
 		15D99831163097140013815E /* List.png in Resources */ = {isa = PBXBuildFile; fileRef = 15D99830163097140013815E /* List.png */; };
 		15D99833163097260013815E /* List@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15D99832163097260013815E /* List@2x.png */; };
@@ -111,7 +108,6 @@
 		15168C861630D7A9003787CF /* VBNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBNotebookViewController.m; sourceTree = "<group>"; };
 		15168C881630D86A003787CF /* Note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Note.png; sourceTree = "<group>"; };
 		15168C8A1630D878003787CF /* Note@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Note@2x.png"; sourceTree = "<group>"; };
-		152A14E616326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VBSyncViewCellHeaderFooter.xib; sourceTree = "<group>"; };
 		15C87C6816311C090001E4F2 /* factory.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = factory.json; sourceTree = "<group>"; };
 		15C87C6B163125410001E4F2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		15C87C6C163125410001E4F2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -142,9 +138,6 @@
 		15C87CAB1632396E0001E4F2 /* Sync@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sync@2x.png"; sourceTree = "<group>"; };
 		15C87CAE16323DB90001E4F2 /* NSData+Base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		15C87CAF16323DB90001E4F2 /* NSData+Base64.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
-		15C87CB516325C060001E4F2 /* VBTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBTextFieldCell.h; sourceTree = "<group>"; };
-		15C87CB616325C060001E4F2 /* VBTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBTextFieldCell.m; sourceTree = "<group>"; };
-		15C87CB816325C940001E4F2 /* VBTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VBTextFieldCell.xib; sourceTree = "<group>"; };
 		15D9982A163096840013815E /* VBWordlistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordlistViewController.h; sourceTree = "<group>"; };
 		15D9982B163096840013815E /* VBWordlistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordlistViewController.m; sourceTree = "<group>"; };
 		15D99830163097140013815E /* List.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = List.png; sourceTree = "<group>"; };
@@ -252,9 +245,6 @@
 			children = (
 				15D9983C1630B1080013815E /* VBCardView.h */,
 				15D9983D1630B1080013815E /* VBCardView.m */,
-				15C87CB516325C060001E4F2 /* VBTextFieldCell.h */,
-				15C87CB816325C940001E4F2 /* VBTextFieldCell.xib */,
-				15C87CB616325C060001E4F2 /* VBTextFieldCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -264,7 +254,6 @@
 			children = (
 				15C87CA41632327F0001E4F2 /* VBSyncViewController.h */,
 				15C87CA51632327F0001E4F2 /* VBSyncViewController.m */,
-				152A14E616326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib */,
 				15168C851630D7A9003787CF /* VBNotebookViewController.h */,
 				15168C861630D7A9003787CF /* VBNotebookViewController.m */,
 				15168C651630B85F003787CF /* VBCarouselViewController.h */,
@@ -446,8 +435,6 @@
 				15C87C6E163125410001E4F2 /* Icon@2x.png in Resources */,
 				15C87CAA1632395D0001E4F2 /* Sync.png in Resources */,
 				15C87CAC1632396E0001E4F2 /* Sync@2x.png in Resources */,
-				15C87CB916325C940001E4F2 /* VBTextFieldCell.xib in Resources */,
-				152A14E716326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,7 +472,6 @@
 				15C87C9B16321EB50001E4F2 /* UIImageView+AFNetworking.m in Sources */,
 				15C87CA71632327F0001E4F2 /* VBSyncViewController.m in Sources */,
 				15C87CB016323F340001E4F2 /* NSData+Base64.m in Sources */,
-				15C87CB716325C070001E4F2 /* VBTextFieldCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
