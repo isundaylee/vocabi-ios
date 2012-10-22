@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class VBWordsViewController;
+@class VBWordsSplitViewController;
 
 @interface VBWordlistViewController : UITableViewController
 {
-    VBWordsViewController *_wvc; 
+    VBWordsViewController *_wvc;
+    VBWordsSplitViewController *_wsvc;
 }
 
 @end

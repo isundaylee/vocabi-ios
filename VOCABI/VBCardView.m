@@ -33,24 +33,41 @@
     return string;
 }
 
+- (NSString *)blankHTML
+{
+    NSString *htmlFilename = @"";
+    if (IS_IPAD)
+        htmlFilename = @"cardview_blank~ipad.html";
+    else
+        htmlFilename = @"cardview_blank.html";
+    NSData *data = [NSData dataWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:htmlFilename]];
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return string;
+}
+
 - (void)reload
 {
-    NSString *HTML = [self templateHTML];
-    HTML = [HTML stringByReplacingOccurrencesOfString:@"#word#" withString:[[self word] word]];
-    HTML = [HTML stringByReplacingOccurrencesOfString:@"#ps#" withString:[[self word] ps]];
-    NSString *tmp = [[[self word] meaning] stringByReplacingOccurrencesOfString:@"\n" withString:@"<br />"];
-    HTML = [HTML stringByReplacingOccurrencesOfString:@"#meaning#" withString:tmp];
-    HTML = [HTML stringByReplacingOccurrencesOfString:@"#desc#" withString:[[self word] desc]];
-    NSArray *samples = [[[self word] sample] componentsSeparatedByString:@"\n"];
-    tmp = @"<ol>";
-    for (NSString *sample in samples) {
-        NSString *word = [[self word] word];
-        if ([sample characterAtIndex:0] == '~') word = [word capitalizedString];
-        NSString *modifiedSample = [sample stringByReplacingOccurrencesOfString:@"~" withString:[NSString stringWithFormat:@"<b>%@</b>", word]];
-        tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<li>%@</li>", modifiedSample]];
+    NSString *HTML;
+    if (self.word) {
+        HTML = [self templateHTML];
+        HTML = [HTML stringByReplacingOccurrencesOfString:@"#word#" withString:[[self word] word]];
+        HTML = [HTML stringByReplacingOccurrencesOfString:@"#ps#" withString:[[self word] ps]];
+        NSString *tmp = [[[self word] meaning] stringByReplacingOccurrencesOfString:@"\n" withString:@"<br />"];
+        HTML = [HTML stringByReplacingOccurrencesOfString:@"#meaning#" withString:tmp];
+        HTML = [HTML stringByReplacingOccurrencesOfString:@"#desc#" withString:[[self word] desc]];
+        NSArray *samples = [[[self word] sample] componentsSeparatedByString:@"\n"];
+        tmp = @"<ol>";
+        for (NSString *sample in samples) {
+            NSString *word = [[self word] word];
+            if ([sample characterAtIndex:0] == '~') word = [word capitalizedString];
+            NSString *modifiedSample = [sample stringByReplacingOccurrencesOfString:@"~" withString:[NSString stringWithFormat:@"<b>%@</b>", word]];
+            tmp = [tmp stringByAppendingString:[NSString stringWithFormat:@"<li>%@</li>", modifiedSample]];
+        }
+        tmp = [tmp stringByAppendingString:@"</ol>"];
+        HTML = [HTML stringByReplacingOccurrencesOfString:@"#sample#" withString:tmp];
+    } else {
+        HTML = [self blankHTML];
     }
-    tmp = [tmp stringByAppendingString:@"</ol>"];
-    HTML = [HTML stringByReplacingOccurrencesOfString:@"#sample#" withString:tmp]; 
     NSURL *url = [NSURL URLWithString:[[NSBundle mainBundle] resourcePath]];
     [self loadHTMLString:HTML baseURL:url];
     [self setNeedsDisplay]; 

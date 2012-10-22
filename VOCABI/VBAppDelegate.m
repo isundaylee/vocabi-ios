@@ -10,10 +10,12 @@
 #import "VBWelcomeViewController.h"
 #import "VBWordlistViewController.h"
 #import "VBSearchViewController.h"
-#import "VBNotebookViewController.h"
 #import "VBConnection.h"
 #import "VBWordStore.h"
 #import "VBSyncViewController.h"
+#import "VBWordsViewController.h"
+#import "VBWordsSplitViewController.h"
+#import "VBNotebook.h"
 
 NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
 
@@ -122,8 +124,18 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     _svc = [[VBSearchViewController alloc] init];
     [_tbc addChildViewController:[self wrapInNavigationController:_svc withTitle:NSLocalizedString(@"Search", nil) image:[UIImage imageNamed:@"Search"]]];
     
-    _nvc = [[VBNotebookViewController alloc] init];
-    [_tbc addChildViewController:[self wrapInNavigationController:_nvc withTitle:NSLocalizedString(@"Notebook", nil) image:[UIImage imageNamed:@"Note"]]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notebookChanged) name:VBNotebookDidChangeNotification object:store]; 
+    
+    if (IS_IPAD) {
+        _nsvc = [[VBWordsSplitViewController alloc] init];
+        [_nsvc setWordlist:[store notebook]];
+        [_tbc addChildViewController:[self wrapInNavigationController:_nsvc withTitle:NSLocalizedString(@"Notebook", nil) image:[UIImage imageNamed:@"Note"]]]; 
+    } else {
+        _nvc = [[VBWordsViewController alloc] init];
+        [_nvc setWordlist:[store notebook]];
+        [_nvc setDisclosing:YES];
+        [_tbc addChildViewController:[self wrapInNavigationController:_nvc withTitle:NSLocalizedString(@"Notebook", nil) image:[UIImage imageNamed:@"Note"]]];
+    }
     
     _syvc = [[VBSyncViewController alloc] init];
     [_tbc addChildViewController:[self wrapInNavigationController:_syvc withTitle:NSLocalizedString(@"Sync", nil) image:[UIImage imageNamed:@"Sync"]]];
@@ -163,6 +175,14 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)notebookChanged
+{
+    if (IS_IPAD)
+        [_nsvc setWordlist:[[VBWordStore sharedStore] notebook]];
+    else
+        [_nvc setWordlist:[[VBWordStore sharedStore] notebook]];
 }
 
 @end

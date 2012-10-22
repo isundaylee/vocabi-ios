@@ -17,6 +17,9 @@
 
 @property (nonatomic) VBWord *word;
 
-- (VBCardView *) cardView; 
+- (VBCardView *) cardView;
+- (UIBarButtonItem *) noteButton;
+
+- (void)reload; 
 
 @end

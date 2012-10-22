@@ -11,6 +11,7 @@
 #import "VBWordlist.h"
 #import "VBWord.h"
 #import "VBWordsViewController.h"
+#import "VBWordsSplitViewController.h"
 
 @interface VBWordlistViewController ()
 
@@ -30,6 +31,8 @@
     if (self) {
         [[self navigationItem] setTitle:NSLocalizedString(@"Wordlists", nil)];
         _wvc = [[VBWordsViewController alloc] init];
+        if (IS_IPAD)
+            _wsvc = [[VBWordsSplitViewController alloc] init];
     }
     
     return self;
@@ -86,9 +89,14 @@
 {
     VBWordlist *list = [[[VBWordStore sharedStore] allWordlists] objectAtIndex:[indexPath row]];
     
-    [_wvc setWordlist:list];
-    
-    [[self navigationController] pushViewController:_wvc animated:YES]; 
+    if (IS_IPAD) {
+        [_wsvc setWordlist:list];
+        [[self navigationController] pushViewController:_wsvc animated:YES];
+    } else {
+        [_wvc setWordlist:list];
+        [_wvc setDisclosing:YES]; 
+        [[self navigationController] pushViewController:_wvc animated:YES];
+    }
 }
 
 @end

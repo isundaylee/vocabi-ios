@@ -19,7 +19,19 @@
 
 @implementation VBWordsViewController
 
-@synthesize wordlist = _wordlist; 
+@synthesize wordlist = _wordlist;
+@synthesize cardViewController = _cardViewController;
+@synthesize disclosing = _disclosing; 
+
+- (void)selectWordAtIndex:(NSUInteger)index animated:(BOOL)animated
+{
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:animated scrollPosition:UITableViewScrollPositionTop]; 
+}
+
+- (UIBarButtonItem *)showCardsButton
+{
+    return self.navigationItem.rightBarButtonItem; 
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -30,17 +42,20 @@
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        [self.navigationItem setTitle:[[self wordlist] title]];
+        [self.navigationItem setTitle:[[self wordlist] listTitle]];
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showCards)];
-        [self.navigationItem setRightBarButtonItem:bbi]; 
+        [self.navigationItem setRightBarButtonItem:bbi];
+        _cardViewController = [[VBCardViewController alloc] init]; 
     }
     return self;
 }
 
-- (void)setWordlist:(VBWordlist *)wordlist
+- (void)setWordlist:(id<VBWordlisting>)wordlist
 {
     _wordlist = wordlist;
-    [self.navigationItem setTitle:[[self wordlist] title]];
+    [self.navigationItem setTitle:[[self wordlist] listTitle]];
+    [self.navigationItem.rightBarButtonItem setEnabled:([wordlist count] != 0)];
+    [self.tableView reloadData]; 
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,7 +85,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[self wordlist] words] count];
+    return [[[self wordlist] orderedWords] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,7 +97,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    VBWord *word = [[[[self wordlist] words] allObjects] objectAtIndex:[indexPath row]];
+    VBWord *word = [[[self wordlist] orderedWords] objectAtIndex:[indexPath row]]; 
     [[cell textLabel] setText:[word word]]; 
     
     return cell;
@@ -90,8 +105,8 @@
 
 - (void)showCards
 {
-    VBCarouselViewController *cvc = [[VBCarouselViewController alloc] initWithWords:[[[self wordlist] words] allObjects]];
-    
+    VBCarouselViewController *cvc = [[VBCarouselViewController alloc] initWithWords:[[self wordlist] orderedWords]];
+
     [self.navigationController pushViewController:cvc animated:YES]; 
 }
 
@@ -99,12 +114,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    VBWord *word = [[[[self wordlist] words] allObjects] objectAtIndex:[indexPath row]];
-    VBCardViewController *cvc = [[VBCardViewController alloc] init];
-    
+    VBWord *word = [[[self wordlist] orderedWords] objectAtIndex:[indexPath row]];
+
+    VBCardViewController *cvc = self.cardViewController;
     [cvc setWord:word]; 
     
-    [self.navigationController pushViewController:cvc animated:YES];
+    if (self.disclosing)
+        [self.navigationController pushViewController:self.cardViewController animated:YES];
 }
 
 @end

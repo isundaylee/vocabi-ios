@@ -19,12 +19,23 @@
 
 @synthesize word = _word;
 
+- (void)reload
+{
+    [self.cardView reload]; 
+}
+
+- (UIBarButtonItem *)noteButton
+{
+    return self.navigationItem.rightBarButtonItem; 
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Note", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(toggleNoteWord:)];
-        self.navigationItem.rightBarButtonItem = bbi; 
+        [bbi setEnabled:NO]; 
+        self.navigationItem.rightBarButtonItem = bbi;
     }
     return self;
 }
@@ -51,9 +62,12 @@
     _word = word;
     VBCardView *v = (VBCardView *)[self view];
     [v setWord:word];
-    if ([[VBWordStore sharedStore] isNoted:word]) [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"Unnote", nil)];
-    else [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"Note", nil)];
-    self.navigationItem.title = [word word]; 
+    if (word) {
+        if ([[VBWordStore sharedStore] isNoted:word]) [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"Unnote", nil)];
+        else [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"Note", nil)];
+        self.navigationItem.title = [word word];
+    }
+    [self.navigationItem.rightBarButtonItem setEnabled:(word != nil)];
 }
 
 - (void)viewDidLoad

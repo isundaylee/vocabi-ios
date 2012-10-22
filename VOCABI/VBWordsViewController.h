@@ -7,11 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VBWordlisting.h"
 
 @class VBWordlist;
+@class VBCardViewController; 
 
 @interface VBWordsViewController : UITableViewController
 
-@property (nonatomic) VBWordlist *wordlist; 
+@property (nonatomic) id<VBWordlisting> wordlist;
+@property (nonatomic) VBCardViewController *cardViewController;
+
+@property (nonatomic) BOOL disclosing;
+
+- (UIBarButtonItem *)showCardsButton;
+
+- (void)selectWordAtIndex:(NSUInteger)index animated:(BOOL)animated; 
 
 @end

@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@class VBWord; 
+@class VBWord;
+@class VBNotebook; 
+
+extern NSString * const VBNotebookDidChangeNotification; 
 
 @interface VBWordStore : NSObject
 
@@ -28,8 +31,9 @@
 
 - (NSInteger)purgeNotebook;
 
+- (VBNotebook *)notebook; 
+
 @property (nonatomic, readonly) NSMutableArray *allWords;
 @property (nonatomic, readonly) NSMutableArray *allWordlists;
-@property (nonatomic, readonly) NSMutableArray *notedWords;
 
 @end

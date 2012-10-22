@@ -11,6 +11,7 @@
 #import "CoreData/CoreData.h"
 #import "VBWordlist.h"
 #import "VBWord.h"
+#import "VBNotebook.h"
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"
@@ -22,6 +23,8 @@ NSString * const VBWordStoreNotedWordsPrefKey = @"VBWordStoreNotedWordsPrefKey";
 NSString * const VBWordStoreRemoteBaseURL = @"http://ljh.me/vocabi-server/";
 
 NSString * const VBWordStoreErrorDomain = @"com.sunday.VOCABI.WordStore";
+
+NSString * const VBNotebookDidChangeNotification = @"VBNotebookDidChangeNotification"; 
 
 typedef enum {
     VBWordStoreInvalidPasscode = -1000,
@@ -35,8 +38,11 @@ typedef enum {
     NSManagedObjectContext *_context;
     
     AFHTTPClient *_httpClient;
-    NSOperationQueue *_requestOperationQueue; 
+    NSOperationQueue *_requestOperationQueue;
+    
 }
+
+@property (nonatomic, readonly) NSMutableArray *notedWords;
 
 @end
 
@@ -139,6 +145,8 @@ typedef enum {
 
 - (void)reportNotedWordsUpdate
 {
+    NSNotification *note = [NSNotification notificationWithName:VBNotebookDidChangeNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotification:note];
     [[NSUserDefaults standardUserDefaults] setObject:_notedWords forKey:VBWordStoreNotedWordsPrefKey];
     [[NSUserDefaults standardUserDefaults] synchronize]; 
 }
@@ -444,6 +452,11 @@ typedef enum {
     _notedWords = purged;
     
     return count; 
+}
+
+- (VBNotebook *)notebook
+{
+    return [[VBNotebook alloc] initWithUIDs:self.notedWords];
 }
 
 @end
