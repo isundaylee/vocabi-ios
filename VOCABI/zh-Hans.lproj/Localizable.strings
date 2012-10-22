@@ -1,0 +1,44 @@
+/*
+  Localizable.strings
+  VOCABI
+
+  Created by Jiahao Li on 10/21/12.
+  Copyright (c) 2012 Jiahao Li. All rights reserved.
+*/
+
+"PiracyDetected" = "检测到盗版软件";
+"PiracyDetectedMessage" = "您正在使用的 VOCABI 软件也许是由非正规途径获取的盗版软件。请考虑从 App Store 购买。";
+"OK" = "确定";
+
+"WordlistsUpdated" = "单词库已更新";
+"WordlistsUpdatedMessage" = "单词库已更新至最新版本。";
+
+"NotebookChanged" = "生词本变更";
+"NotebookChangedMessageSingle" = "从您的生词本中删除了%d个单词，因为该单词已不存在于单词库中。";
+"NotebookChangedMessagePlural" = "从您的生词本中删除了%d个单词，因为这些单词已不存在于单词库中。";
+
+"WordlistsUpdateFetched" = "已下载单词库更新";
+"WordlistsUpdateFetchedMessage" = "已从服务器下载最新单词库，将在您下次启动本应用程序时进行更新。";
+
+"Welcome" = "欢迎";
+"Wordlists" = "单词表";
+"Search" = "搜索";
+"Notebook" = "生词本";
+"Sync" = "同步";
+
+"Note" = "添加到生词本";
+"Unnote" = "从生词本移除";
+
+"SyncFailed" = "同步失败";
+"SyncSucceeded" = "同步成功";
+"SyncSucceededUploadMessage" = "已成功将生词本上传至服务器。您的生词本编码将显示在'同步'标签页中。";
+"SyncSucceededDownloadMessage" = "已从服务器下载生词本。";
+
+"Passcode" = "生词本编码";
+"Upload" = "上传";
+"Download" = "下载";
+
+"SyncNotebookWithServer" = "同步生词本";
+"BlankPasscodeFirstTimeSync" = "第一次同步时，请将生词本编码留空。";
+"PasscodeInvalidFirstTime" = "生词本编码不正确。第一次同步请留空。";
+"PasscodeInvalid" = "生词本编码不正确。";

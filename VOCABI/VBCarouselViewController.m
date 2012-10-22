@@ -32,7 +32,7 @@
     
     if (self) {
         _words = [words mutableCopy];
-        UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:@"Note" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleNoteWord:)];
+        UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Note", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(toggleNoteWord:)];
         self.navigationItem.rightBarButtonItem = bbi;
     }
     
@@ -87,8 +87,8 @@
     VBCardView *view = (VBCardView *)[[self carousel] currentItemView];
     VBWord *word = [view word];
     VBWordStore *store = [VBWordStore sharedStore];
-    if ([store isNoted:word]) self.navigationItem.rightBarButtonItem.title = @"Unnote";
-    else self.navigationItem.rightBarButtonItem.title = @"Note";
+    if ([store isNoted:word]) self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Unnote", nil);
+    else self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Note", nil);
 }
 
 - (void)toggleNoteWord:(id)sender

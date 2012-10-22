@@ -17,4 +17,6 @@
 
 @property (nonatomic) VBWord *word;
 
+- (VBCardView *) cardView; 
+
 @end

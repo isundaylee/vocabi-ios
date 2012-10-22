@@ -23,7 +23,12 @@
 
 - (NSString *)templateHTML
 {
-    NSData *data = [NSData dataWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"cardview.html"]];
+    NSString *htmlFilename = @"";
+    if (IS_IPAD)
+        htmlFilename = @"cardview~ipad.html";
+    else
+        htmlFilename = @"cardview.html";
+    NSData *data = [NSData dataWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:htmlFilename]];
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     return string;
 }

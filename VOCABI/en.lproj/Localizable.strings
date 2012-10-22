@@ -1,0 +1,44 @@
+/*
+  Localizable.strings
+  VOCABI
+
+  Created by Jiahao Li on 10/21/12.
+  Copyright (c) 2012 Jiahao Li. All rights reserved.
+*/
+
+"PiracyDetected" = "Piracy Detected";
+"PiracyDetectedMessage" = "Your copy of VOCABI seems to be pirated. Please consider buying it from the App Store. ";
+"OK" = "确定";
+
+"WordlistsUpdated" = "Wordlists Updated";
+"WordlistsUpdatedMessage" = "Wordlists have been updated to the newest version. ";
+
+"NotebookChanged" = "Notebook Changed";
+"NotebookChangedMessageSingle" = "%d word has been removed from your notebook because it cannot be found in the wordlists. ";
+"NotebookChangedMessagePlural" = "%d words have been removed from your notebook because they cannot be found in the wordlists. "; 
+
+"WordlistsUpdateFetched" = "Update Fetched";
+"WordlistsUpdateFetchedMessage" = "Update has been fetched from the server and will be installed on next application restart. ";
+
+"Welcome" = "Welcome";
+"Wordlists" = "Wordlists";
+"Search" = "Search";
+"Notebook" = "Notebook";
+"Sync" = "Sync";
+
+"Note" = "Note";
+"Unnote" = "Unnote";
+
+"SyncFailed" = "Sync Faild";
+"SyncSucceeded" = "Sync Succeeded";
+"SyncSucceededUploadMessage" = "Notebook has been successfully uploaded to the server. Your passcode is shown in the 'Sync' tab. ";
+"SyncSucceededDownloadMessage" = "Notebook has been downloaded from the server. ";
+
+"Passcode" = "Passcode";
+"Upload" = "Upload";
+"Download" = "Download";
+
+"SyncNotebookWithServer" = "Sync Notebook with Server";
+"BlankPasscodeFirstTimeSync" = "Use blank passcode for first time sync. ";
+"PasscodeInvalidFirstTime" = "Passcode invalid. Use blank passcode for first time sync. ";
+"PasscodeInvalid" = "Invalid passcode. "; 

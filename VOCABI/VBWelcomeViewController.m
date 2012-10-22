@@ -18,7 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [[self navigationItem] setTitle:@"Welcome"]; 
+        [[self navigationItem] setTitle:NSLocalizedString(@"Welcome", nil)]; 
     }
     return self;
 }

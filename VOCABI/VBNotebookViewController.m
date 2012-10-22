@@ -22,7 +22,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.navigationItem.title = @"Notebook";
+        self.navigationItem.title = NSLocalizedString(@"Notebook", nil);
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showCards:)];
         self.navigationItem.rightBarButtonItem = bbi;
     }

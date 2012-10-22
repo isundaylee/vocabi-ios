@@ -22,7 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _filteredWords = [[VBWordStore sharedStore] allWords];
-        self.navigationItem.title = @"Search"; 
+        self.navigationItem.title = NSLocalizedString(@"Search", nil);
     }
     return self;
 }

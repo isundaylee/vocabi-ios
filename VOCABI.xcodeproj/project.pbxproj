@@ -37,6 +37,7 @@
 		15168C871630D7A9003787CF /* VBNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15168C861630D7A9003787CF /* VBNotebookViewController.m */; };
 		15168C891630D86A003787CF /* Note.png in Resources */ = {isa = PBXBuildFile; fileRef = 15168C881630D86A003787CF /* Note.png */; };
 		15168C8B1630D878003787CF /* Note@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15168C8A1630D878003787CF /* Note@2x.png */; };
+		15B939D21634E3E70044484F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 15B939D11634E3E70044484F /* Settings.bundle */; };
 		15C87C6916311C090001E4F2 /* factory.json in Resources */ = {isa = PBXBuildFile; fileRef = 15C87C6816311C090001E4F2 /* factory.json */; };
 		15C87C6D163125410001E4F2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87C6B163125410001E4F2 /* Icon.png */; };
 		15C87C6E163125410001E4F2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87C6C163125410001E4F2 /* Icon@2x.png */; };
@@ -61,6 +62,8 @@
 		15D9983616309C970013815E /* VBWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D9983516309C970013815E /* VBWordsViewController.m */; };
 		15D9983A1630A7D00013815E /* VBCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D998381630A7D00013815E /* VBCardViewController.m */; };
 		15D9983E1630B1080013815E /* VBCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D9983D1630B1080013815E /* VBCardView.m */; };
+		15DE72921634EA3300E068E4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72941634EA3300E068E4 /* Localizable.strings */; };
+		15DE72981634F33100E068E4 /* cardview~ipad.html in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72971634F33100E068E4 /* cardview~ipad.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +111,7 @@
 		15168C861630D7A9003787CF /* VBNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBNotebookViewController.m; sourceTree = "<group>"; };
 		15168C881630D86A003787CF /* Note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Note.png; sourceTree = "<group>"; };
 		15168C8A1630D878003787CF /* Note@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Note@2x.png"; sourceTree = "<group>"; };
+		15B939D11634E3E70044484F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		15C87C6816311C090001E4F2 /* factory.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = factory.json; sourceTree = "<group>"; };
 		15C87C6B163125410001E4F2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		15C87C6C163125410001E4F2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -147,6 +151,10 @@
 		15D998381630A7D00013815E /* VBCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBCardViewController.m; sourceTree = "<group>"; };
 		15D9983C1630B1080013815E /* VBCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBCardView.h; sourceTree = "<group>"; };
 		15D9983D1630B1080013815E /* VBCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBCardView.m; sourceTree = "<group>"; };
+		15DE72931634EA3300E068E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		15DE72951634F0A100E068E4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		15DE72961634F0A100E068E4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		15DE72971634F33100E068E4 /* cardview~ipad.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "cardview~ipad.html"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +228,7 @@
 		15028528163057FB00FEE910 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				15B939D11634E3E70044484F /* Settings.bundle */,
 				15028529163057FB00FEE910 /* VOCABI-Info.plist */,
 				1502852A163057FB00FEE910 /* InfoPlist.strings */,
 				1502852D163057FB00FEE910 /* main.m */,
@@ -287,6 +296,7 @@
 		1502855016306F6200FEE910 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15DE72941634EA3300E068E4 /* Localizable.strings */,
 				15C87CAB1632396E0001E4F2 /* Sync@2x.png */,
 				15C87CA91632395D0001E4F2 /* Sync.png */,
 				15C87C6B163125410001E4F2 /* Icon.png */,
@@ -295,6 +305,7 @@
 				15168C8A1630D878003787CF /* Note@2x.png */,
 				15168C881630D86A003787CF /* Note.png */,
 				15168C721630BCFF003787CF /* cardview.html */,
+				15DE72971634F33100E068E4 /* cardview~ipad.html */,
 				15D99832163097260013815E /* List@2x.png */,
 				15D99830163097140013815E /* List.png */,
 				15028555163070CD00FEE910 /* Logo.png */,
@@ -400,6 +411,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 15028512163057FB00FEE910;
 			productRefGroup = 1502851E163057FB00FEE910 /* Products */;
@@ -436,6 +448,9 @@
 				15C87C6E163125410001E4F2 /* Icon@2x.png in Resources */,
 				15C87CAA1632395D0001E4F2 /* Sync.png in Resources */,
 				15C87CAC1632396E0001E4F2 /* Sync@2x.png in Resources */,
+				15B939D21634E3E70044484F /* Settings.bundle in Resources */,
+				15DE72921634EA3300E068E4 /* Localizable.strings in Resources */,
+				15DE72981634F33100E068E4 /* cardview~ipad.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,8 +514,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				1502852B163057FB00FEE910 /* en */,
+				15DE72961634F0A100E068E4 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		15DE72941634EA3300E068E4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15DE72931634EA3300E068E4 /* en */,
+				15DE72951634F0A100E068E4 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

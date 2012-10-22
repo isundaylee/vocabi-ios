@@ -365,7 +365,7 @@ typedef enum {
     
     if (!([passcode isEqualToString:@""] || [self isPasscodeValid:passcode])) {
         if (block) {
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:@"The passcode supplied is invalid. For first-time sync, leave the passcode blank. " forKey:NSLocalizedDescriptionKey];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:NSLocalizedString(@"PasscodeInvalidFirstTime", nil) forKey:NSLocalizedDescriptionKey];
             NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreInvalidPasscode userInfo:dict];
             block(nil, error);
         }
@@ -400,7 +400,7 @@ typedef enum {
 {
     if (![self isPasscodeValid:passcode]) {
         if (block) {
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:@"The passcode supplied is invalid. " forKey:NSLocalizedDescriptionKey];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:NSLocalizedString(@"PasscodeInvalid", nil) forKey:NSLocalizedDescriptionKey];
             NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreInvalidPasscode userInfo:dict];
             block(error);
         }

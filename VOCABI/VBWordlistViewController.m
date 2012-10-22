@@ -28,7 +28,7 @@
     self = [super initWithStyle:UITableViewStylePlain];
     
     if (self) {
-        [[self navigationItem] setTitle:@"Wordlists"];
+        [[self navigationItem] setTitle:NSLocalizedString(@"Wordlists", nil)];
         _wvc = [[VBWordsViewController alloc] init];
     }
     

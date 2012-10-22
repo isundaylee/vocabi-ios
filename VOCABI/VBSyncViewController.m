@@ -26,7 +26,7 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
     self = [super initWithStyle:UITableViewStyleGrouped];
     
     if (self) {
-        self.navigationItem.title = @"Sync";
+        self.navigationItem.title = NSLocalizedString(@"Sync", nil);
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldChanged:) name:UITextFieldTextDidChangeNotification object:nil];
     }
     
@@ -82,12 +82,12 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
     
     [store uploadNotebookWithPasscode:passcode onCompletion:^(NSString *passcode, NSError *error) {
         if (error) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Failed" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncFailed", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
         } else {
             [[self passcodeField] setText:passcode];
             [self passcodeChanged]; 
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Succeeded" message:@"The notebook has been uploaded to the server. Your passcode is shown in the 'Sync' tab. " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncSucceeded", nil) message:NSLocalizedString(@"SyncSucceededUploadMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show]; 
         }
     }];
@@ -99,19 +99,19 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
     
     [store downloadNotebookWithPasscode:passcode onCompletion:^(NSError *error) {
         if (error) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Failed" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncFailed", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Succeeded" message:@"Your notebook has been downloaded from the server. " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncSucceeded", nil) message:NSLocalizedString(@"SyncSucceededDownloadMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             NSInteger purged = [store purgeNotebook];
             if (purged > 0) {
                 NSString *message;
                 if (purged == 1) {
-                    message = [NSString stringWithFormat:@"%d word has been removed from your notebook because it is not found in the wordlists. ", purged];
+                    message = [NSString stringWithFormat:NSLocalizedString(@"NotebookChangedMessageSingle", nil), purged];
                 } else {
-                    message = [NSString stringWithFormat:@"%d words have been removed from your notebook because they are not found in the wordlists. ", purged];
+                    message = [NSString stringWithFormat:NSLocalizedString(@"NotebookChangedMessagePlural", nil), purged];
                 }
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notebook Changed" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NotebookChanged", nil) message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
                 [alert show];
             }
             NSLog(@"Info: %d item(s) purged after notebook sync. ", purged);
@@ -171,7 +171,7 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
             [cell.contentView addSubview:textField];
         }
         
-        cell.textLabel.text = @"Passcode"; 
+        cell.textLabel.text = NSLocalizedString(@"Passcode", nil); 
         
         return cell;
     } else {
@@ -184,9 +184,9 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
         }
         
         if ([indexPath row] == 0) {
-            cell.textLabel.text = @"Upload";
+            cell.textLabel.text = NSLocalizedString(@"Upload", nil);
         } else {
-            cell.textLabel.text = @"Download"; 
+            cell.textLabel.text = NSLocalizedString(@"Download", nil); 
         }
         return cell;
     }
@@ -209,7 +209,7 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        return @"Sync notebook with server";
+        return NSLocalizedString(@"SyncNotebookWithServer", nil);
     } else {
         return @""; 
     }
@@ -218,7 +218,7 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     if (section == 1) {
-        return @"Use blank passcode for first time upload. "; 
+        return NSLocalizedString(@"BlankPasscodeFirstTimeSync", nil); 
     } else {
         return @"";
     }
