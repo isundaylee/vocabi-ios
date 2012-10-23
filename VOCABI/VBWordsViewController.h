@@ -23,6 +23,7 @@
 - (void)selectWordAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (UIBarButtonItem *)showCardsButton;
 
-- (void)reload; 
+- (void)reload;
+- (void)reloadSelectedWordAnimated:(BOOL)animated;
 
 @end

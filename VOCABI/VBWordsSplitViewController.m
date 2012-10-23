@@ -11,6 +11,7 @@
 #import "VBCarouselViewController.h"
 #import "VBWordlist.h"
 #import "VBWordlisting.h"
+#import "VBWordRateStore.h"
 
 @interface VBWordsSplitViewController ()
 
@@ -24,8 +25,7 @@
 
 - (void)wordsViewController:(VBWordsViewController *)controller didSelectWordWithIndex:(NSInteger)index
 {
-    [self.carouselViewController setWords:[NSArray arrayWithObject:[[self.wordlist orderedWords] objectAtIndex:index]]];
-    [[self.carouselViewController rateButton] setEnabled:YES];
+    // [self.carouselViewController setWords:[NSArray arrayWithObject:[[self.wordlist orderedWords] objectAtIndex:index]]];
 }
 
 - (void)setWordlist:(id<VBWordListing>)wordlist
@@ -63,6 +63,8 @@
         [_wordsViewController.showCardsButton setTarget:self];
         [_wordsViewController.showCardsButton setAction:@selector(showCards:)];
         [_wordsViewController setDisclosing:NO];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(wordRatesChanged) name:VBWordRatesDidChangeNotification object:[VBWordRateStore sharedStore]];
+        
     }
     return self;
 }
@@ -112,6 +114,11 @@
 {
     [self.wordsViewController reload];
     [self.carouselViewController setWords:[NSArray arrayWithObject:[NSNull null]]]; 
+}
+
+- (void)wordRatesChanged
+{
+    [self.wordsViewController reloadSelectedWordAnimated:NO];
 }
 
 @end

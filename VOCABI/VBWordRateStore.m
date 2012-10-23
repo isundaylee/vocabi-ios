@@ -265,4 +265,20 @@ NSString * const VBWordStoreWordRatesPrefKey = @"VBWordStoreWordRatesPrefKey";
     return NSLocalizedString(@"Notebook", nil);
 }
 
+- (UIColor *)colorForWordRate:(VBWordRate)rate
+{
+    if (rate == VBWordRateNone)
+        return [UIColor blackColor];
+    else if (rate == VBWordRateEasy)
+        return [UIColor colorWithRed:49/255.0 green:189/255.0 blue:49/255.0 alpha:1];
+    else if (rate == VBWordRateNormal)
+        return [UIColor colorWithRed:230/255.0 green:223/255.0 blue:25/255.0 alpha:1];
+    else if (rate == VBWordRateHard)
+        return [UIColor redColor];
+    else {
+        [NSException raise:NSInvalidArgumentException format:@"Invalid VBWordRate supplied. "];
+        return nil; 
+    }
+}
+
 @end

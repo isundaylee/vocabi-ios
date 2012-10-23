@@ -9,6 +9,7 @@
 #import "VBWordsViewController.h"
 #import "VBWord.h"
 #import "VBWordStore.h"
+#import "VBWordRateStore.h"
 #import "VBWordlist.h"
 #import "VBCarouselViewController.h"
 
@@ -103,8 +104,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    VBWord *word = [[[self wordlist] orderedWords] objectAtIndex:[indexPath row]]; 
-    [[cell textLabel] setText:[word word]]; 
+    VBWord *word = [[[self wordlist] orderedWords] objectAtIndex:[indexPath row]];
+    VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
+    UIColor *color = [rateStore colorForWordRate:[rateStore rateForWord:word]];
+    [[cell textLabel] setText:[word word]];
+    [[cell textLabel] setTextColor:color];
     
     return cell;
 }
@@ -128,6 +132,21 @@
         [self.navigationController pushViewController:self.carouselViewController animated:YES];
     
     [self.delegate wordsViewController:self didSelectWordWithIndex:[indexPath row]];
+    
+}
+
+- (void)reloadSelectedWordAnimated:(BOOL)animated
+{
+    NSIndexPath *selected = [self.tableView indexPathForSelectedRow];
+    UITableViewRowAnimation animation;
+    if (animated)
+        animation = UITableViewRowAnimationAutomatic;
+    else
+        animation = UITableViewRowAnimationNone;
+    if (selected) {
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:selected] withRowAnimation:animation];
+        [self.tableView selectRowAtIndexPath:selected animated:animated scrollPosition:UITableViewScrollPositionNone];
+    }
 }
 
 @end

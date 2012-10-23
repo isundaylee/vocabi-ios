@@ -37,4 +37,6 @@ extern const NSInteger VBWordRatesNumber;
 
 - (NSString *)descriptionForWordRate:(VBWordRate)rate;
 
+- (UIColor *)colorForWordRate:(VBWordRate)rate; 
+
 @end

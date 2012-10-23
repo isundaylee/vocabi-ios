@@ -150,6 +150,7 @@
     VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     [self.navigationItem.rightBarButtonItem setTitle:[[VBWordRateStore sharedStore] descriptionForWordRate:[rateStore rateForWord:word]]];
     [self.rateViewController setWord:word];
+    [self.rateButton setEnabled:(word != nil)];
 }
 
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
