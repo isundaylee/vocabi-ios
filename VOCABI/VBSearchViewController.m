@@ -58,7 +58,8 @@
     
     VBCarouselViewController *cvc = [[VBCarouselViewController alloc] initWithWords:[NSArray arrayWithObject:word]];
     
-    [self.navigationController pushViewController:cvc animated:YES]; 
+    [self.navigationController pushViewController:cvc animated:YES];
+    [cvc reload];
 }
 
 - (void)refilter
