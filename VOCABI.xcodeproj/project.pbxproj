@@ -159,7 +159,7 @@
 		15DE72971634F33100E068E4 /* cardview~ipad.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "cardview~ipad.html"; sourceTree = "<group>"; };
 		15DE72991634F92900E068E4 /* VBWordsSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordsSplitViewController.h; sourceTree = "<group>"; };
 		15DE729A1634F92900E068E4 /* VBWordsSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordsSplitViewController.m; sourceTree = "<group>"; };
-		15DE729F163514F900E068E4 /* VBWordListing22.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordListing22.h; sourceTree = "<group>"; };
+		15DE729F163514F900E068E4 /* VBWordListing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordListing.h; sourceTree = "<group>"; };
 		15DE72A01635173800E068E4 /* VBNotebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBNotebook.h; sourceTree = "<group>"; };
 		15DE72A11635173800E068E4 /* VBNotebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBNotebook.m; sourceTree = "<group>"; };
 		15DE72A316351E5B00E068E4 /* cardview_blank.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = cardview_blank.html; sourceTree = "<group>"; };
@@ -412,7 +412,7 @@
 			isa = PBXGroup;
 			children = (
 				15DE72B81636273E00E068E4 /* VBWordsViewControllerDelegate.h */,
-				15DE729F163514F900E068E4 /* VBWordListing22.h */,
+				15DE729F163514F900E068E4 /* VBWordListing.h */,
 				15DE72B916363EAC00E068E4 /* VBWordlistListing.h */,
 				15DE72B6163614D600E068E4 /* VBRateViewControllerDelegate.h */,
 			);
