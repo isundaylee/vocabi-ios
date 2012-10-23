@@ -48,8 +48,14 @@
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showCards)];
         [self.navigationItem setRightBarButtonItem:bbi];
         _carouselViewController = [[VBCarouselViewController alloc] init];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(wordRatesUpdated) name:VBWordRatesDidChangeNotification object:[VBWordRateStore sharedStore]]; 
     }
     return self;
+}
+
+- (void)wordRatesUpdated
+{
+    [self reloadSelectedWordAnimated:NO]; 
 }
 
 - (void)setWordlist:(id<VBWordListing>)wordlist
