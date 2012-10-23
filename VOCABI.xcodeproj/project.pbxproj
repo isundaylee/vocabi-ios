@@ -59,7 +59,6 @@
 		15D99831163097140013815E /* List.png in Resources */ = {isa = PBXBuildFile; fileRef = 15D99830163097140013815E /* List.png */; };
 		15D99833163097260013815E /* List@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15D99832163097260013815E /* List@2x.png */; };
 		15D9983616309C970013815E /* VBWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D9983516309C970013815E /* VBWordsViewController.m */; };
-		15D9983A1630A7D00013815E /* VBCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D998381630A7D00013815E /* VBCardViewController.m */; };
 		15D9983E1630B1080013815E /* VBCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D9983D1630B1080013815E /* VBCardView.m */; };
 		15DE72921634EA3300E068E4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72941634EA3300E068E4 /* Localizable.strings */; };
 		15DE72981634F33100E068E4 /* cardview~ipad.html in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72971634F33100E068E4 /* cardview~ipad.html */; };
@@ -67,6 +66,11 @@
 		15DE72A21635173800E068E4 /* VBNotebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DE72A11635173800E068E4 /* VBNotebook.m */; };
 		15DE72A416351E5C00E068E4 /* cardview_blank.html in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72A316351E5B00E068E4 /* cardview_blank.html */; };
 		15DE72A616351E7800E068E4 /* cardview_blank~ipad.html in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72A516351E7800E068E4 /* cardview_blank~ipad.html */; };
+		15DE72AC1635238B00E068E4 /* Icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72AB1635238B00E068E4 /* Icon~ipad.png */; };
+		15DE72AE1635239000E068E4 /* Icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72AD1635238F00E068E4 /* Icon@2x~ipad.png */; };
+		15DE72B41636009B00E068E4 /* VBRateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DE72B21636009B00E068E4 /* VBRateViewController.m */; };
+		15DE72BC163642C500E068E4 /* VBWordRateStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DE72BB163642C500E068E4 /* VBWordRateStore.m */; };
+		15DE72C316364F3400E068E4 /* VBWordRateCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DE72C216364F3400E068E4 /* VBWordRateCategory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,7 +101,6 @@
 		150285651630774300FEE910 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1502856816307B7200FEE910 /* VBConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBConnection.h; sourceTree = "<group>"; };
 		1502856916307B7200FEE910 /* VBConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBConnection.m; sourceTree = "<group>"; };
-		15168C5C1630B508003787CF /* VBCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBCardViewController.h; sourceTree = "<group>"; };
 		15168C611630B7F4003787CF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		15168C621630B7F4003787CF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		15168C651630B85F003787CF /* VBCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBCarouselViewController.h; sourceTree = "<group>"; };
@@ -147,9 +150,7 @@
 		15D9982B163096840013815E /* VBWordlistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordlistViewController.m; sourceTree = "<group>"; };
 		15D99830163097140013815E /* List.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = List.png; sourceTree = "<group>"; };
 		15D99832163097260013815E /* List@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "List@2x.png"; sourceTree = "<group>"; };
-		15D9983416309C970013815E /* VBWordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordsViewController.h; sourceTree = "<group>"; };
 		15D9983516309C970013815E /* VBWordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordsViewController.m; sourceTree = "<group>"; };
-		15D998381630A7D00013815E /* VBCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBCardViewController.m; sourceTree = "<group>"; };
 		15D9983C1630B1080013815E /* VBCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBCardView.h; sourceTree = "<group>"; };
 		15D9983D1630B1080013815E /* VBCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBCardView.m; sourceTree = "<group>"; };
 		15DE72931634EA3300E068E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -158,11 +159,24 @@
 		15DE72971634F33100E068E4 /* cardview~ipad.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "cardview~ipad.html"; sourceTree = "<group>"; };
 		15DE72991634F92900E068E4 /* VBWordsSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordsSplitViewController.h; sourceTree = "<group>"; };
 		15DE729A1634F92900E068E4 /* VBWordsSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordsSplitViewController.m; sourceTree = "<group>"; };
-		15DE729F163514F900E068E4 /* VBWordlisting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordlisting.h; sourceTree = "<group>"; };
+		15DE729F163514F900E068E4 /* VBWordListing22.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordListing22.h; sourceTree = "<group>"; };
 		15DE72A01635173800E068E4 /* VBNotebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBNotebook.h; sourceTree = "<group>"; };
 		15DE72A11635173800E068E4 /* VBNotebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBNotebook.m; sourceTree = "<group>"; };
 		15DE72A316351E5B00E068E4 /* cardview_blank.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = cardview_blank.html; sourceTree = "<group>"; };
 		15DE72A516351E7800E068E4 /* cardview_blank~ipad.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "cardview_blank~ipad.html"; sourceTree = "<group>"; };
+		15DE72AB1635238B00E068E4 /* Icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~ipad.png"; sourceTree = "<group>"; };
+		15DE72AD1635238F00E068E4 /* Icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~ipad.png"; sourceTree = "<group>"; };
+		15DE72B11636009A00E068E4 /* VBRateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBRateViewController.h; sourceTree = "<group>"; };
+		15DE72B21636009B00E068E4 /* VBRateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBRateViewController.m; sourceTree = "<group>"; };
+		15DE72B6163614D600E068E4 /* VBRateViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBRateViewControllerDelegate.h; sourceTree = "<group>"; };
+		15DE72B71636265C00E068E4 /* VBWordsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordsViewController.h; sourceTree = "<group>"; };
+		15DE72B81636273E00E068E4 /* VBWordsViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordsViewControllerDelegate.h; sourceTree = "<group>"; };
+		15DE72B916363EAC00E068E4 /* VBWordlistListing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordlistListing.h; sourceTree = "<group>"; };
+		15DE72BA163642C500E068E4 /* VBWordRateStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordRateStore.h; sourceTree = "<group>"; };
+		15DE72BB163642C500E068E4 /* VBWordRateStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordRateStore.m; sourceTree = "<group>"; };
+		15DE72BD1636439400E068E4 /* VBServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBServerConfig.h; sourceTree = "<group>"; };
+		15DE72C116364F3400E068E4 /* VBWordRateCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordRateCategory.h; sourceTree = "<group>"; };
+		15DE72C216364F3400E068E4 /* VBWordRateCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordRateCategory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +263,8 @@
 		150285381630580800FEE910 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				15DE72C116364F3400E068E4 /* VBWordRateCategory.h */,
+				15DE72C216364F3400E068E4 /* VBWordRateCategory.m */,
 				15DE72A01635173800E068E4 /* VBNotebook.h */,
 				15DE72A11635173800E068E4 /* VBNotebook.m */,
 				150285591630724500FEE910 /* VBModel.xcdatamodeld */,
@@ -279,10 +295,8 @@
 				15168C671630B85F003787CF /* VBCarouselViewController.xib */,
 				15D9982A163096840013815E /* VBWordlistViewController.h */,
 				15D9982B163096840013815E /* VBWordlistViewController.m */,
-				15D9983416309C970013815E /* VBWordsViewController.h */,
 				15D9983516309C970013815E /* VBWordsViewController.m */,
-				15D998381630A7D00013815E /* VBCardViewController.m */,
-				15168C5C1630B508003787CF /* VBCardViewController.h */,
+				15DE72B71636265C00E068E4 /* VBWordsViewController.h */,
 				1502854916306C7800FEE910 /* VBWelcomeViewController.h */,
 				1502854A16306C7800FEE910 /* VBWelcomeViewController.m */,
 				1502854B16306C7800FEE910 /* VBWelcomeViewController.xib */,
@@ -291,6 +305,8 @@
 				15168C7E1630CE5D003787CF /* VBSearchViewController.xib */,
 				15DE72991634F92900E068E4 /* VBWordsSplitViewController.h */,
 				15DE729A1634F92900E068E4 /* VBWordsSplitViewController.m */,
+				15DE72B11636009A00E068E4 /* VBRateViewController.h */,
+				15DE72B21636009B00E068E4 /* VBRateViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -300,6 +316,9 @@
 			children = (
 				150285621630761F00FEE910 /* VBWordStore.h */,
 				150285631630761F00FEE910 /* VBWordStore.m */,
+				15DE72BA163642C500E068E4 /* VBWordRateStore.h */,
+				15DE72BB163642C500E068E4 /* VBWordRateStore.m */,
+				15DE72BD1636439400E068E4 /* VBServerConfig.h */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -307,6 +326,8 @@
 		1502855016306F6200FEE910 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15DE72AD1635238F00E068E4 /* Icon@2x~ipad.png */,
+				15DE72AB1635238B00E068E4 /* Icon~ipad.png */,
 				15DE72941634EA3300E068E4 /* Localizable.strings */,
 				15C87CAB1632396E0001E4F2 /* Sync@2x.png */,
 				15C87CA91632395D0001E4F2 /* Sync.png */,
@@ -390,7 +411,10 @@
 		15DE729E163514BA00E068E4 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				15DE729F163514F900E068E4 /* VBWordlisting.h */,
+				15DE72B81636273E00E068E4 /* VBWordsViewControllerDelegate.h */,
+				15DE729F163514F900E068E4 /* VBWordListing22.h */,
+				15DE72B916363EAC00E068E4 /* VBWordlistListing.h */,
+				15DE72B6163614D600E068E4 /* VBRateViewControllerDelegate.h */,
 			);
 			name = Protocol;
 			sourceTree = "<group>";
@@ -474,6 +498,8 @@
 				15DE72981634F33100E068E4 /* cardview~ipad.html in Resources */,
 				15DE72A416351E5C00E068E4 /* cardview_blank.html in Resources */,
 				15DE72A616351E7800E068E4 /* cardview_blank~ipad.html in Resources */,
+				15DE72AC1635238B00E068E4 /* Icon~ipad.png in Resources */,
+				15DE72AE1635239000E068E4 /* Icon@2x~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +536,6 @@
 				1502856A16307B7200FEE910 /* VBConnection.m in Sources */,
 				15D9982C163096850013815E /* VBWordlistViewController.m in Sources */,
 				15D9983616309C970013815E /* VBWordsViewController.m in Sources */,
-				15D9983A1630A7D00013815E /* VBCardViewController.m in Sources */,
 				15D9983E1630B1080013815E /* VBCardView.m in Sources */,
 				15168C631630B7F4003787CF /* iCarousel.m in Sources */,
 				15168C681630B85F003787CF /* VBCarouselViewController.m in Sources */,
@@ -528,6 +553,9 @@
 				15C87CB016323F340001E4F2 /* NSData+Base64.m in Sources */,
 				15DE729B1634F92900E068E4 /* VBWordsSplitViewController.m in Sources */,
 				15DE72A21635173800E068E4 /* VBNotebook.m in Sources */,
+				15DE72B41636009B00E068E4 /* VBRateViewController.m in Sources */,
+				15DE72BC163642C500E068E4 /* VBWordRateStore.m in Sources */,
+				15DE72C316364F3400E068E4 /* VBWordRateCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

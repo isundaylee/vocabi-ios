@@ -7,7 +7,7 @@
 //
 
 #import "VBSearchViewController.h"
-#import "VBCardViewController.h"
+#import "VBCarouselViewController.h"
 #import "VBWordStore.h"
 #import "VBWord.h"
 
@@ -55,9 +55,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     VBWord *word = (VBWord *)[_filteredWords objectAtIndex:[indexPath row]];
-    VBCardViewController *cvc = [[VBCardViewController alloc] init];
     
-    [cvc setWord:word];
+    VBCarouselViewController *cvc = [[VBCarouselViewController alloc] initWithWords:[NSArray arrayWithObject:word]];
     
     [self.navigationController pushViewController:cvc animated:YES]; 
 }

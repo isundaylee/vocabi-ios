@@ -21,7 +21,7 @@
     VBWelcomeViewController *_wevc;
     VBWordlistViewController *_wlvc;
     VBSearchViewController *_svc;
-    VBWordsViewController *_nvc;
+    VBWordlistViewController *_nvc;
     VBSyncViewController *_syvc;
     VBWordsSplitViewController *_nsvc; 
 }

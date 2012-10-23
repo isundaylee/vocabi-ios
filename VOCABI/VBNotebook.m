@@ -33,14 +33,14 @@
     return NSLocalizedString(@"Notebook", nil);
 }
 
-- (NSInteger)count
+- (NSInteger)countOfWords
 {
     return [_uids count];
 }
 
 - (NSArray *)orderedWords
 {
-    NSMutableArray *words = [NSMutableArray arrayWithCapacity:[self count]];
+    NSMutableArray *words = [NSMutableArray arrayWithCapacity:[self countOfWords]];
     VBWordStore *store = [VBWordStore sharedStore];
     for (NSString *uid in _uids) {
         VBWord *word = [store wordWithUID:uid];

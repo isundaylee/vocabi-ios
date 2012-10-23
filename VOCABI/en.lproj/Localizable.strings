@@ -41,4 +41,9 @@
 "SyncNotebookWithServer" = "Sync Notebook with Server";
 "BlankPasscodeFirstTimeSync" = "Use blank passcode for first time sync. ";
 "PasscodeInvalidFirstTime" = "Passcode invalid. Use blank passcode for first time sync. ";
-"PasscodeInvalid" = "Invalid passcode. "; 
+"PasscodeInvalid" = "Invalid passcode. ";
+
+"Unrated" = "Unrated";
+"Easy" = "Easy";
+"NeedsPractice" = "Needs Practice";
+"Tricky" = "Tricky";

@@ -7,31 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VBWordlistListing.h"
 
 @class VBWord;
 @class VBNotebook; 
 
-extern NSString * const VBNotebookDidChangeNotification; 
+extern NSString * const VBNotebookDidChangeNotification;
 
-@interface VBWordStore : NSObject
+
+@interface VBWordStore : NSObject <VBWordlistListing>
 
 + (VBWordStore *)sharedStore;
 
 - (void)fetchUpdateOnCompletion:(void (^)(Boolean updated, NSError *error))block; 
 - (Boolean)applyUpdate;
 
-- (void)unnoteWord:(VBWord *)word;
-- (void)noteWord:(VBWord *)word;
-- (Boolean)isNoted:(VBWord *)word;
-
 - (VBWord *)wordWithUID:(NSString *)uid;
-
-- (void)uploadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSString *passcode, NSError *error))block;
-- (void)downloadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSError *error))block;
-
-- (NSInteger)purgeNotebook;
-
-- (VBNotebook *)notebook; 
 
 @property (nonatomic, readonly) NSMutableArray *allWords;
 @property (nonatomic, readonly) NSMutableArray *allWordlists;

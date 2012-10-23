@@ -7,16 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VBWordlisting.h"
+#import "VBWordListing.h"
+#import "VBWordsViewControllerDelegate.h"
 
 @class VBWordlist;
 @class VBWordsViewController;
-@class VBCardViewController;
+@class VBCarouselViewController;
 
-@interface VBWordsSplitViewController : UIViewController
+@interface VBWordsSplitViewController : UIViewController <VBWordsViewControllerDelegate>
 
-@property (nonatomic) id<VBWordlisting> wordlist;
+@property (nonatomic) id<VBWordListing> wordlist;
 @property (nonatomic, readonly) VBWordsViewController *wordsViewController;
-@property (nonatomic, readonly) VBCardViewController *cardViewController;
+@property (nonatomic, readonly) VBCarouselViewController *carouselViewController;
+
+
+- (void) reload;
 
 @end

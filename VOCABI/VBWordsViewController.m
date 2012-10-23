@@ -10,7 +10,6 @@
 #import "VBWord.h"
 #import "VBWordStore.h"
 #import "VBWordlist.h"
-#import "VBCardViewController.h"
 #import "VBCarouselViewController.h"
 
 @interface VBWordsViewController ()
@@ -20,8 +19,10 @@
 @implementation VBWordsViewController
 
 @synthesize wordlist = _wordlist;
-@synthesize cardViewController = _cardViewController;
-@synthesize disclosing = _disclosing; 
+@synthesize carouselViewController = _carouselViewController;
+@synthesize disclosing = _disclosing;
+
+@synthesize delegate = _delegate; 
 
 - (void)selectWordAtIndex:(NSUInteger)index animated:(BOOL)animated
 {
@@ -45,22 +46,22 @@
         [self.navigationItem setTitle:[[self wordlist] listTitle]];
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showCards)];
         [self.navigationItem setRightBarButtonItem:bbi];
-        _cardViewController = [[VBCardViewController alloc] init]; 
+        _carouselViewController = [[VBCarouselViewController alloc] init];
     }
     return self;
 }
 
-- (void)setWordlist:(id<VBWordlisting>)wordlist
+- (void)setWordlist:(id<VBWordListing>)wordlist
 {
     _wordlist = wordlist;
     [self.navigationItem setTitle:[[self wordlist] listTitle]];
-    [self.navigationItem.rightBarButtonItem setEnabled:([wordlist count] != 0)];
+    [self.navigationItem.rightBarButtonItem setEnabled:([wordlist countOfWords] != 0)];
     [self.tableView reloadData]; 
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [[self tableView] reloadData]; 
+//    [[self tableView] reloadData];
 }
 
 - (void)viewDidLoad
@@ -81,11 +82,16 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)reload
+{
+    [self.tableView reloadData]; 
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[self wordlist] orderedWords] count];
+    return [[self wordlist] countOfWords];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,11 +122,12 @@
 {
     VBWord *word = [[[self wordlist] orderedWords] objectAtIndex:[indexPath row]];
 
-    VBCardViewController *cvc = self.cardViewController;
-    [cvc setWord:word]; 
+    [self.carouselViewController setWords:[NSArray arrayWithObject:word]];
     
     if (self.disclosing)
-        [self.navigationController pushViewController:self.cardViewController animated:YES];
+        [self.navigationController pushViewController:self.carouselViewController animated:YES];
+    
+    [self.delegate wordsViewController:self didSelectWordWithIndex:[indexPath row]];
 }
 
 @end

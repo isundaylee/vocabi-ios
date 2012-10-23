@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "VBWordlisting.h"
+#import "VBWordListing.h"
 
 
-@interface VBWordlist : NSManagedObject <VBWordlisting>
+@interface VBWordlist : NSManagedObject <VBWordListing>
 
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSSet *words;

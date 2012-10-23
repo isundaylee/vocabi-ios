@@ -8,6 +8,7 @@
 
 #import "VBSyncViewController.h"
 #import "VBWordStore.h"
+#import "VBWordRateStore.h"
 
 NSString * const VBNotebookPasscodePrefKey = @"VBNotebookPasscodePrefKey";
 
@@ -77,10 +78,10 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
 }
 
 - (IBAction)uploadNotebook:(id)sender {
-    VBWordStore *store = [VBWordStore sharedStore];
+    VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     NSString *passcode = [[self passcodeField] text];
     
-    [store uploadNotebookWithPasscode:passcode onCompletion:^(NSString *passcode, NSError *error) {
+    [rateStore uploadWordRatesWithPasscode:passcode onCompletion:^(NSString *passcode, NSError *error) {
         if (error) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncFailed", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
@@ -94,16 +95,16 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
 }
 
 - (IBAction)downloadNotebook:(id)sender {
-    VBWordStore *store = [VBWordStore sharedStore];
+    VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     NSString *passcode = [[self passcodeField] text];
     
-    [store downloadNotebookWithPasscode:passcode onCompletion:^(NSError *error) {
+    [rateStore downloadWordRatesWithPasscode:passcode onCompletion:^(NSError *error) {
         if (error) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncFailed", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncSucceeded", nil) message:NSLocalizedString(@"SyncSucceededDownloadMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-            NSInteger purged = [store purgeNotebook];
+            NSInteger purged = [rateStore purgeWordRates];
             if (purged > 0) {
                 NSString *message;
                 if (purged == 1) {

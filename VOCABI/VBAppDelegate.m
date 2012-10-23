@@ -12,10 +12,12 @@
 #import "VBSearchViewController.h"
 #import "VBConnection.h"
 #import "VBWordStore.h"
+#import "VBWordRateStore.h"
 #import "VBSyncViewController.h"
 #import "VBWordsViewController.h"
 #import "VBWordsSplitViewController.h"
 #import "VBNotebook.h"
+#import "VBRateViewController.h"
 
 NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
 
@@ -67,6 +69,10 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    // Tests
+    
+    NSLog(@"Info: Bundle path: %@", [[NSBundle mainBundle] bundlePath]);
+    
     // Register notification for userdefaults change
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsChanged) name:NSUserDefaultsDidChangeNotification object:nil]; 
@@ -78,10 +84,11 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     // Handling Updates
     
     VBWordStore *store = [VBWordStore sharedStore];
+    VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     
     if ([store applyUpdate]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WordlistsUpdated", nil) message:NSLocalizedString(@"WordlistsUpdatedMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-        NSInteger purged = [store purgeNotebook];
+        NSInteger purged = [rateStore purgeWordRates];
         if (purged > 0) {
             NSString *message;
             if (purged == 1) {
@@ -119,30 +126,34 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     }
     
     _wlvc = [[VBWordlistViewController alloc] init];
+    [_wlvc setWordlistStore:store]; 
     [_tbc addChildViewController:[self wrapInNavigationController:_wlvc withTitle:NSLocalizedString(@"Wordlists", nil) image:[UIImage imageNamed:@"List"]]];
     
     _svc = [[VBSearchViewController alloc] init];
     [_tbc addChildViewController:[self wrapInNavigationController:_svc withTitle:NSLocalizedString(@"Search", nil) image:[UIImage imageNamed:@"Search"]]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notebookChanged) name:VBNotebookDidChangeNotification object:store]; 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(wordRatesChanged) name:VBWordRatesDidChangeNotification object:rateStore];
     
-    if (IS_IPAD) {
-        _nsvc = [[VBWordsSplitViewController alloc] init];
-        [_nsvc setWordlist:[store notebook]];
-        [_tbc addChildViewController:[self wrapInNavigationController:_nsvc withTitle:NSLocalizedString(@"Notebook", nil) image:[UIImage imageNamed:@"Note"]]]; 
-    } else {
-        _nvc = [[VBWordsViewController alloc] init];
-        [_nvc setWordlist:[store notebook]];
-        [_nvc setDisclosing:YES];
-        [_tbc addChildViewController:[self wrapInNavigationController:_nvc withTitle:NSLocalizedString(@"Notebook", nil) image:[UIImage imageNamed:@"Note"]]];
-    }
+//    if (IS_IPAD) {
+//        _nsvc = [[VBWordsSplitViewController alloc] init];
+//        [_nsvc setWordlist:[store notebook]];
+//        [_tbc addChildViewController:[self wrapInNavigationController:_nsvc withTitle:NSLocalizedString(@"Notebook", nil) image:[UIImage imageNamed:@"Note"]]]; 
+//    } else {
+//        _nvc = [[VBWordlistViewController alloc] init];
+//        [_nvc setWordlistStore:rateStore];
+//        [_tbc addChildViewController:[self wrapInNavigationController:_nvc withTitle:NSLocalizedString(@"Notebook", nil) image:[UIImage imageNamed:@"Note"]]];
+//    }
+    
+    _nvc = [[VBWordlistViewController alloc] init];
+    [_nvc setWordlistStore:rateStore];
+    [_tbc addChildViewController:[self wrapInNavigationController:_nvc withTitle:NSLocalizedString(@"Notebook", nil) image:[UIImage imageNamed:@"Note"]]];
     
     _syvc = [[VBSyncViewController alloc] init];
     [_tbc addChildViewController:[self wrapInNavigationController:_syvc withTitle:NSLocalizedString(@"Sync", nil) image:[UIImage imageNamed:@"Sync"]]];
     
     [[self window] setRootViewController:_tbc];
     
-    // Tests
+//    [[self window] setRootViewController:[[VBRateViewController alloc] init]]; 
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -177,12 +188,13 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)notebookChanged
+- (void)wordRatesChanged
 {
-    if (IS_IPAD)
-        [_nsvc setWordlist:[[VBWordStore sharedStore] notebook]];
-    else
-        [_nvc setWordlist:[[VBWordStore sharedStore] notebook]];
+    if (IS_IPAD) {
+        [[_nvc wordsSplitViewController] reload];
+    } else {
+        [[_nvc wordsViewContoller] reload];
+    }
 }
 
 @end

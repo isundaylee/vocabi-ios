@@ -1,5 +1,5 @@
 //
-//  VBNotebook.h
+//  VBWordlisting.h
 //  VOCABI
 //
 //  Created by Jiahao Li on 10/22/12.
@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VBWordlisting.h"
 
-@interface VBNotebook : NSObject <VBWordListing>
+@protocol VBWordListing <NSObject>
 
-- (id)initWithUIDs:(NSArray *)uids;
+- (NSString *)listTitle;
+- (NSInteger)countOfWords;
+- (NSArray *)orderedWords;
 
 @end

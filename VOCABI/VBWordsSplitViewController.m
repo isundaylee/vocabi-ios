@@ -8,7 +8,6 @@
 
 #import "VBWordsSplitViewController.h"
 #import "VBWordsViewController.h"
-#import "VBCardViewController.h"
 #import "VBCarouselViewController.h"
 #import "VBWordlist.h"
 #import "VBWordlisting.h"
@@ -21,13 +20,21 @@
 
 @synthesize wordlist = _wordlist;
 @synthesize wordsViewController = _wordsViewController;
-@synthesize cardViewController = _cardViewController;
+@synthesize carouselViewController = _carouselViewController;
 
-- (void)setWordlist:(id<VBWordlisting>)wordlist
+- (void)wordsViewController:(VBWordsViewController *)controller didSelectWordWithIndex:(NSInteger)index
+{
+    [self.carouselViewController setWords:[NSArray arrayWithObject:[[self.wordlist orderedWords] objectAtIndex:index]]];
+    [[self.carouselViewController rateButton] setEnabled:YES];
+}
+
+- (void)setWordlist:(id<VBWordListing>)wordlist
 {
     _wordlist = wordlist;
     [self.wordsViewController setWordlist:wordlist];
-    [self.cardViewController setWord:nil];
+    [self.wordsViewController setDelegate:self]; 
+    [self.carouselViewController setWords:[NSArray arrayWithObject:[NSNull null]]];
+    [[self.carouselViewController rateButton] setEnabled:NO]; 
     self.navigationItem.title = [self.wordlist listTitle];
 }
 
@@ -48,11 +55,11 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _wordsViewController = [[VBWordsViewController alloc] init];
-        _cardViewController = [[VBCardViewController alloc] init];
-        _wordsViewController.cardViewController = _cardViewController;
+        _carouselViewController = [[VBCarouselViewController alloc] init];
+        _wordsViewController.carouselViewController = _carouselViewController;
 //        self.navigationItem.rightBarButtonItem = _cardViewController.noteButton;
 //        self.navigationItem.leftBarButtonItem = _wordsViewController.showCardsButton;
-        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:_cardViewController.noteButton, _wordsViewController.showCardsButton, nil];
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:_carouselViewController.rateButton, _wordsViewController.showCardsButton, nil];
         [_wordsViewController.showCardsButton setTarget:self];
         [_wordsViewController.showCardsButton setAction:@selector(showCards:)];
         [_wordsViewController setDisclosing:NO];
@@ -69,7 +76,7 @@
 - (void)loadView
 {
     self.view = [[UIView alloc] init];
-    [self.view addSubview:self.cardViewController.view];
+    [self.view addSubview:self.carouselViewController.view];
     [self.view addSubview:self.wordsViewController.view];
 }
 
@@ -79,15 +86,15 @@
     CGSize size = self.view.frame.size;
     CGFloat sideWidth = 200;
     [self.wordsViewController.view setFrame:CGRectMake(origin.x, origin.y, sideWidth, size.height)];
-    [self.cardViewController.view setFrame:CGRectMake(sideWidth, origin.y, size.width - sideWidth, size.height)];
-    [self.cardViewController reload];
+    [self.carouselViewController.view setFrame:CGRectMake(sideWidth, origin.y, size.width - sideWidth, size.height)];
+    [self.carouselViewController reload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self adjustViews];
     [self.wordsViewController viewWillAppear:animated];
-    [self.cardViewController viewWillAppear:animated]; 
+    [self.carouselViewController viewWillAppear:animated];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -99,6 +106,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)reload
+{
+    [self.wordsViewController reload];
+    [self.carouselViewController setWords:[NSArray arrayWithObject:[NSNull null]]]; 
 }
 
 @end

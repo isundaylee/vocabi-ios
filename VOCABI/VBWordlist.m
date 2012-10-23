@@ -25,14 +25,14 @@
     return self.title;
 }
 
-- (NSInteger)count
+- (NSInteger)countOfWords
 {
     return [self.words count];
 }
 
 - (NSArray *)orderedWords
 {
-    return self.words.allObjects;
+    return [self.words.allObjects sortedArrayUsingSelector:@selector(compare:)];
 }
 
 @end

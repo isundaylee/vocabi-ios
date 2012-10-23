@@ -1,5 +1,5 @@
 //
-//  VBWordlisting.h
+//  VBWordlistListing.h
 //  VOCABI
 //
 //  Created by Jiahao Li on 10/22/12.
@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol VBWordlisting <NSObject>
+@protocol VBWordlistListing <NSObject>
 
-- (NSString *)listTitle;
-- (NSInteger)count;
-- (NSArray *)orderedWords;
+- (NSString *) listTitle; 
+- (NSInteger) countOfWordlists;
+- (NSArray *) orderedWordlists;
 
 @end

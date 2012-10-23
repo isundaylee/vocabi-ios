@@ -42,3 +42,8 @@
 "BlankPasscodeFirstTimeSync" = "第一次同步时，请将生词本编码留空。";
 "PasscodeInvalidFirstTime" = "生词本编码不正确。第一次同步请留空。";
 "PasscodeInvalid" = "生词本编码不正确。";
+
+"Unrated" = "未分组";
+"Easy" = "简单";
+"NeedsPractice" = "不熟练";
+"Tricky" = "困难"; 
