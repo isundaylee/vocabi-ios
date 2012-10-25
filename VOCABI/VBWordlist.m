@@ -20,4 +20,19 @@
     return [[self title] localizedCaseInsensitiveCompare:[object title]]; 
 }
 
+- (NSString *)listTitle
+{
+    return self.title;
+}
+
+- (NSInteger)countOfWords
+{
+    return [self.words count];
+}
+
+- (NSArray *)orderedWords
+{
+    return [self.words.allObjects sortedArrayUsingSelector:@selector(compare:)];
+}
+
 @end

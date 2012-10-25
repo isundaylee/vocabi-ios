@@ -11,8 +11,9 @@
 @class VBWelcomeViewController;
 @class VBWordlistViewController;
 @class VBSearchViewController;
-@class VBNotebookViewController;
-@class VBSyncViewController; 
+@class VBSyncViewController;
+@class VBWordsViewController;
+@class VBWordsSplitViewController;
 
 @interface VBAppDelegate : UIResponder <UIApplicationDelegate>
 {
@@ -20,8 +21,9 @@
     VBWelcomeViewController *_wevc;
     VBWordlistViewController *_wlvc;
     VBSearchViewController *_svc;
-    VBNotebookViewController *_nvc;
-    VBSyncViewController *_syvc; 
+    VBWordlistViewController *_nvc;
+    VBSyncViewController *_syvc;
+    VBWordsSplitViewController *_nsvc; 
 }
 
 @property (strong, nonatomic) UIWindow *window;

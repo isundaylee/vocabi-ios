@@ -7,7 +7,7 @@
 //
 
 #import "VBSearchViewController.h"
-#import "VBCardViewController.h"
+#import "VBCarouselViewController.h"
 #import "VBWordStore.h"
 #import "VBWord.h"
 
@@ -22,7 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _filteredWords = [[VBWordStore sharedStore] allWords];
-        self.navigationItem.title = @"Search"; 
+        self.navigationItem.title = NSLocalizedString(@"Search", nil);
     }
     return self;
 }
@@ -55,11 +55,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     VBWord *word = (VBWord *)[_filteredWords objectAtIndex:[indexPath row]];
-    VBCardViewController *cvc = [[VBCardViewController alloc] init];
     
-    [cvc setWord:word];
+    VBCarouselViewController *cvc = [[VBCarouselViewController alloc] initWithWords:[NSArray arrayWithObject:word]];
     
-    [self.navigationController pushViewController:cvc animated:YES]; 
+    [self.navigationController pushViewController:cvc animated:YES];
+    [cvc reload];
 }
 
 - (void)refilter
@@ -104,11 +104,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

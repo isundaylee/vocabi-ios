@@ -9,34 +9,93 @@
 #import "VBCarouselViewController.h"
 #import "VBCardView.h"
 #import "VBWordStore.h"
+#import "VBRateViewController.h"
+#import "VBWord.h"
 
 @interface VBCarouselViewController ()
 {
-    NSMutableArray *_words; 
+    NSArray *_words;
 }
+
+@property (nonatomic) VBRateViewController *rateViewController;
+@property (nonatomic) UIPopoverController *rateViewPopoverController;
 
 @end
 
 @implementation VBCarouselViewController
 
 @synthesize carousel = _carousel;
+@synthesize words = _words;
+@synthesize rateViewController = _rateViewController;
+@synthesize rateViewPopoverController = _rateViewPopoverController;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithWords:(NSArray *)words
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _words = [words copy];
+        _rateViewController = [[VBRateViewController alloc] init];
+        [_rateViewController setDelegate:self]; 
+        UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Unrated", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(rateWord:)];
+        self.navigationItem.rightBarButtonItem = bbi;
+    }
+    return self;
+}
+
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [self carouselDidEndScrollingAnimation:self.carousel];
+//}
+
+- (void)rateViewControllerDidRateWord:(VBRateViewController *)rateViewController
+{
+    
+    
+    if (IS_IPAD) {
+        [self.rateViewPopoverController dismissPopoverAnimated:YES];
+        [self setRateViewPopoverController:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    [self carouselDidEndScrollingAnimation:self.carousel];
+}
+
+- (void)rateWord:(id)sender
+{
+    if (IS_IPAD) {
+        if ([self.rateViewPopoverController isPopoverVisible]) {
+            [self.rateViewPopoverController dismissPopoverAnimated:YES];
+            self.rateViewPopoverController = nil;
+        } else {
+            self.rateViewPopoverController = [[UIPopoverController alloc] initWithContentViewController:self.rateViewController];
+            [self.rateViewPopoverController setDelegate:self];
+            [self.rateViewPopoverController presentPopoverFromBarButtonItem:[self rateButton] permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        }
+    } else {
+        [self.navigationController pushViewController:self.rateViewController animated:YES]; 
+    }
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.rateViewPopoverController = nil; 
+}
+
+- (id)init
 {
     return [self initWithWords:[NSArray array]];
 }
 
-- (id) initWithWords:(NSArray *)words
+- (void)setWords:(NSArray *)words
 {
-    self = [super initWithNibName:nil bundle:nil];
-    
-    if (self) {
-        _words = [words mutableCopy];
-        UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:@"Note" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleNoteWord:)];
-        self.navigationItem.rightBarButtonItem = bbi;
-    }
-    
-    return self; 
+    _words = [words copy];
+    [self.carousel reloadData];
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    return [self initWithWords:[NSArray array]];
 }
 
 - (void)viewDidLoad
@@ -45,8 +104,8 @@
     // Do any additional setup after loading the view from its nib.
     [self carousel].type = iCarouselTypeLinear;
     [self carousel].bounceDistance = 0.1;
-    [self carousel].scrollSpeed = 0.3;
-    [self carousel].decelerationRate = 0.1; 
+    [self carousel].scrollSpeed = 1;
+    [self carousel].decelerationRate = 0.99;
 }
 
 - (void)viewDidUnload
@@ -57,9 +116,9 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [self.carousel reloadData]; 
 }
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
@@ -76,33 +135,46 @@
     }
     
     VBCardView *cardView = (VBCardView *)view;
-    [cardView setWord:[_words objectAtIndex:index]];
+    id word = [self.words objectAtIndex:index];
+    if (word == [NSNull null]) word = nil;
+    [cardView setWord:word];
 
     return cardView;
 }
 
-- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
-{
-}
-
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel
 {
-    self.navigationItem.title = [NSString stringWithFormat:@"%d/%d", [carousel currentItemIndex] + 1, [_words count]];
+    self.navigationItem.title = [NSString stringWithFormat:@"%d/%d", [carousel currentItemIndex] + 1, [self.words count]];
     VBCardView *view = (VBCardView *)[[self carousel] currentItemView];
     VBWord *word = [view word];
-    VBWordStore *store = [VBWordStore sharedStore];
-    if ([store isNoted:word]) self.navigationItem.rightBarButtonItem.title = @"Unnote";
-    else self.navigationItem.rightBarButtonItem.title = @"Note";
+    VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
+    [self.navigationItem.rightBarButtonItem setTitle:[[VBWordRateStore sharedStore] descriptionForWordRate:[rateStore rateForWord:word]]];
+    [self.rateViewController setWord:word];
+    [self.rateButton setEnabled:(word != nil)];
 }
 
-- (void)toggleNoteWord:(id)sender
+- (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
 {
-    VBCardView *view = (VBCardView *)[[self carousel] currentItemView];
-    VBWord *word = [view word];
-    VBWordStore *store = [VBWordStore sharedStore];
-    if ([store isNoted:word]) [store unnoteWord:word];
-    else [store noteWord:word];
-    [self carouselDidEndScrollingAnimation:[self carousel]]; 
+    if (option == iCarouselOptionWrap) {
+        return 1;
+    } else {
+        return value;
+    }
+}
+
+- (CGFloat)carouselItemWidth:(iCarousel *)carousel
+{
+    return self.view.bounds.size.width; 
+}
+
+- (void)reload
+{
+    [self.carousel reloadData]; 
+}
+
+- (UIBarButtonItem *)rateButton
+{
+    return self.navigationItem.rightBarButtonItem; 
 }
 
 @end

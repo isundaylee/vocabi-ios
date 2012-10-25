@@ -34,10 +34,9 @@
 		15168C801630CE5D003787CF /* VBSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15168C7E1630CE5D003787CF /* VBSearchViewController.xib */; };
 		15168C821630D061003787CF /* Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 15168C811630D061003787CF /* Search.png */; };
 		15168C841630D070003787CF /* Search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15168C831630D070003787CF /* Search@2x.png */; };
-		15168C871630D7A9003787CF /* VBNotebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15168C861630D7A9003787CF /* VBNotebookViewController.m */; };
 		15168C891630D86A003787CF /* Note.png in Resources */ = {isa = PBXBuildFile; fileRef = 15168C881630D86A003787CF /* Note.png */; };
 		15168C8B1630D878003787CF /* Note@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15168C8A1630D878003787CF /* Note@2x.png */; };
-		152A14E716326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 152A14E616326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib */; };
+		15B939D21634E3E70044484F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 15B939D11634E3E70044484F /* Settings.bundle */; };
 		15C87C6916311C090001E4F2 /* factory.json in Resources */ = {isa = PBXBuildFile; fileRef = 15C87C6816311C090001E4F2 /* factory.json */; };
 		15C87C6D163125410001E4F2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87C6B163125410001E4F2 /* Icon.png */; };
 		15C87C6E163125410001E4F2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87C6C163125410001E4F2 /* Icon@2x.png */; };
@@ -56,14 +55,22 @@
 		15C87CAA1632395D0001E4F2 /* Sync.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87CA91632395D0001E4F2 /* Sync.png */; };
 		15C87CAC1632396E0001E4F2 /* Sync@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C87CAB1632396E0001E4F2 /* Sync@2x.png */; };
 		15C87CB016323F340001E4F2 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C87CAF16323DB90001E4F2 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		15C87CB716325C070001E4F2 /* VBTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C87CB616325C060001E4F2 /* VBTextFieldCell.m */; };
-		15C87CB916325C940001E4F2 /* VBTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15C87CB816325C940001E4F2 /* VBTextFieldCell.xib */; };
 		15D9982C163096850013815E /* VBWordlistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D9982B163096840013815E /* VBWordlistViewController.m */; };
 		15D99831163097140013815E /* List.png in Resources */ = {isa = PBXBuildFile; fileRef = 15D99830163097140013815E /* List.png */; };
 		15D99833163097260013815E /* List@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15D99832163097260013815E /* List@2x.png */; };
 		15D9983616309C970013815E /* VBWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D9983516309C970013815E /* VBWordsViewController.m */; };
-		15D9983A1630A7D00013815E /* VBCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D998381630A7D00013815E /* VBCardViewController.m */; };
 		15D9983E1630B1080013815E /* VBCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D9983D1630B1080013815E /* VBCardView.m */; };
+		15DE72921634EA3300E068E4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72941634EA3300E068E4 /* Localizable.strings */; };
+		15DE72981634F33100E068E4 /* cardview~ipad.html in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72971634F33100E068E4 /* cardview~ipad.html */; };
+		15DE729B1634F92900E068E4 /* VBWordsSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DE729A1634F92900E068E4 /* VBWordsSplitViewController.m */; };
+		15DE72A21635173800E068E4 /* VBNotebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DE72A11635173800E068E4 /* VBNotebook.m */; };
+		15DE72A416351E5C00E068E4 /* cardview_blank.html in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72A316351E5B00E068E4 /* cardview_blank.html */; };
+		15DE72A616351E7800E068E4 /* cardview_blank~ipad.html in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72A516351E7800E068E4 /* cardview_blank~ipad.html */; };
+		15DE72AC1635238B00E068E4 /* Icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72AB1635238B00E068E4 /* Icon~ipad.png */; };
+		15DE72AE1635239000E068E4 /* Icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 15DE72AD1635238F00E068E4 /* Icon@2x~ipad.png */; };
+		15DE72B41636009B00E068E4 /* VBRateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DE72B21636009B00E068E4 /* VBRateViewController.m */; };
+		15DE72BC163642C500E068E4 /* VBWordRateStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DE72BB163642C500E068E4 /* VBWordRateStore.m */; };
+		15DE72C316364F3400E068E4 /* VBWordRateCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 15DE72C216364F3400E068E4 /* VBWordRateCategory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,7 +101,6 @@
 		150285651630774300FEE910 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1502856816307B7200FEE910 /* VBConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBConnection.h; sourceTree = "<group>"; };
 		1502856916307B7200FEE910 /* VBConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBConnection.m; sourceTree = "<group>"; };
-		15168C5C1630B508003787CF /* VBCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBCardViewController.h; sourceTree = "<group>"; };
 		15168C611630B7F4003787CF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		15168C621630B7F4003787CF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		15168C651630B85F003787CF /* VBCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBCarouselViewController.h; sourceTree = "<group>"; };
@@ -107,11 +113,9 @@
 		15168C7E1630CE5D003787CF /* VBSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VBSearchViewController.xib; sourceTree = "<group>"; };
 		15168C811630D061003787CF /* Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search.png; sourceTree = "<group>"; };
 		15168C831630D070003787CF /* Search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search@2x.png"; sourceTree = "<group>"; };
-		15168C851630D7A9003787CF /* VBNotebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBNotebookViewController.h; sourceTree = "<group>"; };
-		15168C861630D7A9003787CF /* VBNotebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBNotebookViewController.m; sourceTree = "<group>"; };
 		15168C881630D86A003787CF /* Note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Note.png; sourceTree = "<group>"; };
 		15168C8A1630D878003787CF /* Note@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Note@2x.png"; sourceTree = "<group>"; };
-		152A14E616326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VBSyncViewCellHeaderFooter.xib; sourceTree = "<group>"; };
+		15B939D11634E3E70044484F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		15C87C6816311C090001E4F2 /* factory.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = factory.json; sourceTree = "<group>"; };
 		15C87C6B163125410001E4F2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		15C87C6C163125410001E4F2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -142,18 +146,37 @@
 		15C87CAB1632396E0001E4F2 /* Sync@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sync@2x.png"; sourceTree = "<group>"; };
 		15C87CAE16323DB90001E4F2 /* NSData+Base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		15C87CAF16323DB90001E4F2 /* NSData+Base64.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
-		15C87CB516325C060001E4F2 /* VBTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBTextFieldCell.h; sourceTree = "<group>"; };
-		15C87CB616325C060001E4F2 /* VBTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBTextFieldCell.m; sourceTree = "<group>"; };
-		15C87CB816325C940001E4F2 /* VBTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VBTextFieldCell.xib; sourceTree = "<group>"; };
 		15D9982A163096840013815E /* VBWordlistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordlistViewController.h; sourceTree = "<group>"; };
 		15D9982B163096840013815E /* VBWordlistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordlistViewController.m; sourceTree = "<group>"; };
 		15D99830163097140013815E /* List.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = List.png; sourceTree = "<group>"; };
 		15D99832163097260013815E /* List@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "List@2x.png"; sourceTree = "<group>"; };
-		15D9983416309C970013815E /* VBWordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordsViewController.h; sourceTree = "<group>"; };
 		15D9983516309C970013815E /* VBWordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordsViewController.m; sourceTree = "<group>"; };
-		15D998381630A7D00013815E /* VBCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBCardViewController.m; sourceTree = "<group>"; };
 		15D9983C1630B1080013815E /* VBCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBCardView.h; sourceTree = "<group>"; };
 		15D9983D1630B1080013815E /* VBCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBCardView.m; sourceTree = "<group>"; };
+		15DE72931634EA3300E068E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		15DE72951634F0A100E068E4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		15DE72961634F0A100E068E4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		15DE72971634F33100E068E4 /* cardview~ipad.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "cardview~ipad.html"; sourceTree = "<group>"; };
+		15DE72991634F92900E068E4 /* VBWordsSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordsSplitViewController.h; sourceTree = "<group>"; };
+		15DE729A1634F92900E068E4 /* VBWordsSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordsSplitViewController.m; sourceTree = "<group>"; };
+		15DE729F163514F900E068E4 /* VBWordListing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordListing.h; sourceTree = "<group>"; };
+		15DE72A01635173800E068E4 /* VBNotebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBNotebook.h; sourceTree = "<group>"; };
+		15DE72A11635173800E068E4 /* VBNotebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBNotebook.m; sourceTree = "<group>"; };
+		15DE72A316351E5B00E068E4 /* cardview_blank.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = cardview_blank.html; sourceTree = "<group>"; };
+		15DE72A516351E7800E068E4 /* cardview_blank~ipad.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "cardview_blank~ipad.html"; sourceTree = "<group>"; };
+		15DE72AB1635238B00E068E4 /* Icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon~ipad.png"; sourceTree = "<group>"; };
+		15DE72AD1635238F00E068E4 /* Icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~ipad.png"; sourceTree = "<group>"; };
+		15DE72B11636009A00E068E4 /* VBRateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBRateViewController.h; sourceTree = "<group>"; };
+		15DE72B21636009B00E068E4 /* VBRateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBRateViewController.m; sourceTree = "<group>"; };
+		15DE72B6163614D600E068E4 /* VBRateViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBRateViewControllerDelegate.h; sourceTree = "<group>"; };
+		15DE72B71636265C00E068E4 /* VBWordsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordsViewController.h; sourceTree = "<group>"; };
+		15DE72B81636273E00E068E4 /* VBWordsViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordsViewControllerDelegate.h; sourceTree = "<group>"; };
+		15DE72B916363EAC00E068E4 /* VBWordlistListing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordlistListing.h; sourceTree = "<group>"; };
+		15DE72BA163642C500E068E4 /* VBWordRateStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordRateStore.h; sourceTree = "<group>"; };
+		15DE72BB163642C500E068E4 /* VBWordRateStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordRateStore.m; sourceTree = "<group>"; };
+		15DE72BD1636439400E068E4 /* VBServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBServerConfig.h; sourceTree = "<group>"; };
+		15DE72C116364F3400E068E4 /* VBWordRateCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordRateCategory.h; sourceTree = "<group>"; };
+		15DE72C216364F3400E068E4 /* VBWordRateCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordRateCategory.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +234,7 @@
 		15028527163057FB00FEE910 /* VOCABI */ = {
 			isa = PBXGroup;
 			children = (
+				15DE729E163514BA00E068E4 /* Protocol */,
 				1502855016306F6200FEE910 /* Resources */,
 				1502856716307B6700FEE910 /* Helper */,
 				1502853B1630581800FEE910 /* Store */,
@@ -227,6 +251,7 @@
 		15028528163057FB00FEE910 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				15B939D11634E3E70044484F /* Settings.bundle */,
 				15028529163057FB00FEE910 /* VOCABI-Info.plist */,
 				1502852A163057FB00FEE910 /* InfoPlist.strings */,
 				1502852D163057FB00FEE910 /* main.m */,
@@ -238,6 +263,10 @@
 		150285381630580800FEE910 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				15DE72C116364F3400E068E4 /* VBWordRateCategory.h */,
+				15DE72C216364F3400E068E4 /* VBWordRateCategory.m */,
+				15DE72A01635173800E068E4 /* VBNotebook.h */,
+				15DE72A11635173800E068E4 /* VBNotebook.m */,
 				150285591630724500FEE910 /* VBModel.xcdatamodeld */,
 				1502855F163075F000FEE910 /* VBWord.h */,
 				15028560163075F000FEE910 /* VBWord.m */,
@@ -252,9 +281,6 @@
 			children = (
 				15D9983C1630B1080013815E /* VBCardView.h */,
 				15D9983D1630B1080013815E /* VBCardView.m */,
-				15C87CB516325C060001E4F2 /* VBTextFieldCell.h */,
-				15C87CB816325C940001E4F2 /* VBTextFieldCell.xib */,
-				15C87CB616325C060001E4F2 /* VBTextFieldCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -264,24 +290,23 @@
 			children = (
 				15C87CA41632327F0001E4F2 /* VBSyncViewController.h */,
 				15C87CA51632327F0001E4F2 /* VBSyncViewController.m */,
-				152A14E616326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib */,
-				15168C851630D7A9003787CF /* VBNotebookViewController.h */,
-				15168C861630D7A9003787CF /* VBNotebookViewController.m */,
 				15168C651630B85F003787CF /* VBCarouselViewController.h */,
 				15168C661630B85F003787CF /* VBCarouselViewController.m */,
 				15168C671630B85F003787CF /* VBCarouselViewController.xib */,
 				15D9982A163096840013815E /* VBWordlistViewController.h */,
 				15D9982B163096840013815E /* VBWordlistViewController.m */,
-				15D9983416309C970013815E /* VBWordsViewController.h */,
 				15D9983516309C970013815E /* VBWordsViewController.m */,
-				15D998381630A7D00013815E /* VBCardViewController.m */,
-				15168C5C1630B508003787CF /* VBCardViewController.h */,
+				15DE72B71636265C00E068E4 /* VBWordsViewController.h */,
 				1502854916306C7800FEE910 /* VBWelcomeViewController.h */,
 				1502854A16306C7800FEE910 /* VBWelcomeViewController.m */,
 				1502854B16306C7800FEE910 /* VBWelcomeViewController.xib */,
 				15168C7C1630CE5D003787CF /* VBSearchViewController.h */,
 				15168C7D1630CE5D003787CF /* VBSearchViewController.m */,
 				15168C7E1630CE5D003787CF /* VBSearchViewController.xib */,
+				15DE72991634F92900E068E4 /* VBWordsSplitViewController.h */,
+				15DE729A1634F92900E068E4 /* VBWordsSplitViewController.m */,
+				15DE72B11636009A00E068E4 /* VBRateViewController.h */,
+				15DE72B21636009B00E068E4 /* VBRateViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -291,6 +316,9 @@
 			children = (
 				150285621630761F00FEE910 /* VBWordStore.h */,
 				150285631630761F00FEE910 /* VBWordStore.m */,
+				15DE72BA163642C500E068E4 /* VBWordRateStore.h */,
+				15DE72BB163642C500E068E4 /* VBWordRateStore.m */,
+				15DE72BD1636439400E068E4 /* VBServerConfig.h */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -298,6 +326,9 @@
 		1502855016306F6200FEE910 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15DE72AD1635238F00E068E4 /* Icon@2x~ipad.png */,
+				15DE72AB1635238B00E068E4 /* Icon~ipad.png */,
+				15DE72941634EA3300E068E4 /* Localizable.strings */,
 				15C87CAB1632396E0001E4F2 /* Sync@2x.png */,
 				15C87CA91632395D0001E4F2 /* Sync.png */,
 				15C87C6B163125410001E4F2 /* Icon.png */,
@@ -306,6 +337,9 @@
 				15168C8A1630D878003787CF /* Note@2x.png */,
 				15168C881630D86A003787CF /* Note.png */,
 				15168C721630BCFF003787CF /* cardview.html */,
+				15DE72A316351E5B00E068E4 /* cardview_blank.html */,
+				15DE72971634F33100E068E4 /* cardview~ipad.html */,
+				15DE72A516351E7800E068E4 /* cardview_blank~ipad.html */,
 				15D99832163097260013815E /* List@2x.png */,
 				15D99830163097140013815E /* List.png */,
 				15028555163070CD00FEE910 /* Logo.png */,
@@ -374,6 +408,17 @@
 			path = "VOCABI/NSData+Base64";
 			sourceTree = "<group>";
 		};
+		15DE729E163514BA00E068E4 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				15DE72B81636273E00E068E4 /* VBWordsViewControllerDelegate.h */,
+				15DE729F163514F900E068E4 /* VBWordListing.h */,
+				15DE72B916363EAC00E068E4 /* VBWordlistListing.h */,
+				15DE72B6163614D600E068E4 /* VBRateViewControllerDelegate.h */,
+			);
+			name = Protocol;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -384,6 +429,7 @@
 				15028519163057FB00FEE910 /* Sources */,
 				1502851A163057FB00FEE910 /* Frameworks */,
 				1502851B163057FB00FEE910 /* Resources */,
+				15B939CB1633CE090044484F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -410,6 +456,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 15028512163057FB00FEE910;
 			productRefGroup = 1502851E163057FB00FEE910 /* Products */;
@@ -446,12 +493,33 @@
 				15C87C6E163125410001E4F2 /* Icon@2x.png in Resources */,
 				15C87CAA1632395D0001E4F2 /* Sync.png in Resources */,
 				15C87CAC1632396E0001E4F2 /* Sync@2x.png in Resources */,
-				15C87CB916325C940001E4F2 /* VBTextFieldCell.xib in Resources */,
-				152A14E716326B3500FC27DD /* VBSyncViewCellHeaderFooter.xib in Resources */,
+				15B939D21634E3E70044484F /* Settings.bundle in Resources */,
+				15DE72921634EA3300E068E4 /* Localizable.strings in Resources */,
+				15DE72981634F33100E068E4 /* cardview~ipad.html in Resources */,
+				15DE72A416351E5C00E068E4 /* cardview_blank.html in Resources */,
+				15DE72A616351E7800E068E4 /* cardview_blank~ipad.html in Resources */,
+				15DE72AC1635238B00E068E4 /* Icon~ipad.png in Resources */,
+				15DE72AE1635239000E068E4 /* Icon@2x~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		15B939CB1633CE090044484F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "version=`/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $PRODUCT_SETTINGS_PATH`\nversion=`expr $version + 1`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $version\" $PRODUCT_SETTINGS_PATH\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $version\" $PRODUCT_SETTINGS_PATH";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		15028519163057FB00FEE910 /* Sources */ = {
@@ -468,12 +536,10 @@
 				1502856A16307B7200FEE910 /* VBConnection.m in Sources */,
 				15D9982C163096850013815E /* VBWordlistViewController.m in Sources */,
 				15D9983616309C970013815E /* VBWordsViewController.m in Sources */,
-				15D9983A1630A7D00013815E /* VBCardViewController.m in Sources */,
 				15D9983E1630B1080013815E /* VBCardView.m in Sources */,
 				15168C631630B7F4003787CF /* iCarousel.m in Sources */,
 				15168C681630B85F003787CF /* VBCarouselViewController.m in Sources */,
 				15168C7F1630CE5D003787CF /* VBSearchViewController.m in Sources */,
-				15168C871630D7A9003787CF /* VBNotebookViewController.m in Sources */,
 				15C87C9316321EB50001E4F2 /* AFHTTPClient.m in Sources */,
 				15C87C9416321EB50001E4F2 /* AFHTTPRequestOperation.m in Sources */,
 				15C87C9516321EB50001E4F2 /* AFImageRequestOperation.m in Sources */,
@@ -485,7 +551,11 @@
 				15C87C9B16321EB50001E4F2 /* UIImageView+AFNetworking.m in Sources */,
 				15C87CA71632327F0001E4F2 /* VBSyncViewController.m in Sources */,
 				15C87CB016323F340001E4F2 /* NSData+Base64.m in Sources */,
-				15C87CB716325C070001E4F2 /* VBTextFieldCell.m in Sources */,
+				15DE729B1634F92900E068E4 /* VBWordsSplitViewController.m in Sources */,
+				15DE72A21635173800E068E4 /* VBNotebook.m in Sources */,
+				15DE72B41636009B00E068E4 /* VBRateViewController.m in Sources */,
+				15DE72BC163642C500E068E4 /* VBWordRateStore.m in Sources */,
+				15DE72C316364F3400E068E4 /* VBWordRateCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,8 +566,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				1502852B163057FB00FEE910 /* en */,
+				15DE72961634F0A100E068E4 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		15DE72941634EA3300E068E4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15DE72931634EA3300E068E4 /* en */,
+				15DE72951634F0A100E068E4 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -511,7 +592,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xu Wang (ET8U82VMA2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -526,7 +607,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E69AF10-3A9D-41D4-9F32-2EF027421599";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -539,7 +620,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xu Wang (ET8U82VMA2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -548,7 +629,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E69AF10-3A9D-41D4-9F32-2EF027421599";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -564,7 +645,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -579,7 +660,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

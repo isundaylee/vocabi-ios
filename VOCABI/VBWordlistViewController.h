@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VBWordlistListing.h"
 
 @class VBWordsViewController;
+@class VBWordsSplitViewController;
 
 @interface VBWordlistViewController : UITableViewController
-{
-    VBWordsViewController *_wvc; 
-}
+
+@property (nonatomic) id<VBWordlistListing> wordlistStore;
+@property (nonatomic, readonly) VBWordsViewController *wordsViewContoller;
+@property (nonatomic, readonly) VBWordsSplitViewController *wordsSplitViewController; 
+
+- (void)reload; 
 
 @end

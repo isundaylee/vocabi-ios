@@ -8,50 +8,35 @@
 
 #import "VBSyncViewController.h"
 #import "VBWordStore.h"
-#import "VBTextFieldCell.h"
+#import "VBWordRateStore.h"
 
-NSString * const VBNotebookPasscodePrefKey = @"VBNotebookPasscodePrefKey"; 
+NSString * const VBNotebookPasscodePrefKey = @"VBNotebookPasscodePrefKey";
+
+NSInteger const VBTextFieldCellTextFieldTag = 52; 
 
 @interface VBSyncViewController ()
 {
-    __weak IBOutlet UITextField *_passcodeField;
-    
-    __weak IBOutlet UIView *_headerView;
-    __weak IBOutlet UIView *_footerView;
-    __weak IBOutlet UIButton *_uploadButton;
 }
 
 @end
 
 @implementation VBSyncViewController
 
-- (UIView *)footerView;
-{
-    if (!_footerView) {
-        [[NSBundle mainBundle] loadNibNamed:@"VBSyncViewCellHeaderFooter" owner:self options:nil];
-    }
-    
-    return _footerView; 
-}
-
-- (UIView *)headerView
-{
-    if (!_headerView) {
-        [[NSBundle mainBundle] loadNibNamed:@"VBSyncViewCellHeaderFooter" owner:self options:nil];
-    }
-    
-    return _headerView; 
-}
-
 - (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     
     if (self) {
-        self.navigationItem.title = @"Sync";
+        self.navigationItem.title = NSLocalizedString(@"Sync", nil);
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldChanged:) name:UITextFieldTextDidChangeNotification object:nil];
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)loadView
@@ -66,15 +51,14 @@ NSString * const VBNotebookPasscodePrefKey = @"VBNotebookPasscodePrefKey";
 
 - (UITextField *)passcodeField
 {
-    VBTextFieldCell *cell = (VBTextFieldCell *)[[self tableView] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    UITextField *field = [cell editField];
+    UITableViewCell *cell = [[self tableView] cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    UITextField *field = (UITextField *)[cell.contentView viewWithTag:VBTextFieldCellTextFieldTag];
     return field;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self tableView] registerNib:[UINib nibWithNibName:@"VBTextFieldCell" bundle:nil] forCellReuseIdentifier:@"VBTextFieldCell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -90,46 +74,45 @@ NSString * const VBNotebookPasscodePrefKey = @"VBNotebookPasscodePrefKey";
 }
 
 - (void)viewDidUnload {
-//    _passcodeField = nil;
     [super viewDidUnload];
 }
 
 - (IBAction)uploadNotebook:(id)sender {
-    VBWordStore *store = [VBWordStore sharedStore];
+    VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     NSString *passcode = [[self passcodeField] text];
     
-    [store uploadNotebookWithPasscode:passcode onCompletion:^(NSString *passcode, NSError *error) {
+    [rateStore uploadWordRatesWithPasscode:passcode onCompletion:^(NSString *passcode, NSError *error) {
         if (error) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Failed" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncFailed", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
         } else {
             [[self passcodeField] setText:passcode];
-            [self passcodeChanged:nil];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Succeeded" message:@"The notebook has been uploaded to the server. Your passcode is shown in the 'Sync' tab. " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [self passcodeChanged]; 
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncSucceeded", nil) message:NSLocalizedString(@"SyncSucceededUploadMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show]; 
         }
     }];
 }
 
 - (IBAction)downloadNotebook:(id)sender {
-    VBWordStore *store = [VBWordStore sharedStore];
+    VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     NSString *passcode = [[self passcodeField] text];
     
-    [store downloadNotebookWithPasscode:passcode onCompletion:^(NSError *error) {
+    [rateStore downloadWordRatesWithPasscode:passcode onCompletion:^(NSError *error) {
         if (error) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Failed" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncFailed", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sync Succeeded" message:@"Your notebook has been downloaded from the server. " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            NSInteger purged = [store purgeNotebook];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncSucceeded", nil) message:NSLocalizedString(@"SyncSucceededDownloadMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+            NSInteger purged = [rateStore purgeWordRates];
             if (purged > 0) {
                 NSString *message;
                 if (purged == 1) {
-                    message = [NSString stringWithFormat:@"%d word has been removed from your notebook because it is not found in the wordlists. ", purged];
+                    message = [NSString stringWithFormat:NSLocalizedString(@"NotebookChangedMessageSingle", nil), purged];
                 } else {
-                    message = [NSString stringWithFormat:@"%d words have been removed from your notebook because they are not found in the wordlists. ", purged];
+                    message = [NSString stringWithFormat:NSLocalizedString(@"NotebookChangedMessagePlural", nil), purged];
                 }
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notebook Changed" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NotebookChanged", nil) message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
                 [alert show];
             }
             NSLog(@"Info: %d item(s) purged after notebook sync. ", purged);
@@ -143,55 +126,103 @@ NSString * const VBNotebookPasscodePrefKey = @"VBNotebookPasscodePrefKey";
     return YES;
 }
 
-- (void)passcodeChanged:(id)sender {
+- (void)passcodeChanged {
     [[NSUserDefaults standardUserDefaults] setObject:[[self passcodeField] text] forKey:VBNotebookPasscodePrefKey];
-    [[NSUserDefaults standardUserDefaults] synchronize]; 
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)textFieldChanged:(NSNotification *)note {
+    if (note.object == [self passcodeField]) {
+        [self passcodeChanged];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if (section == 0) {
+        return 1;
+    } else {
+        return 2;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = @"VBTextFieldCell";
-    VBTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if ([indexPath section] == 0) {
+        NSString *cellIdentifier = @"VBTextFieldCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
-    if (!cell) {
-        NSLog(@"Warning: Should never happen. "); 
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+            CGRect rect; 
+            if (IS_IPAD) {
+                rect = CGRectMake(120, 12, 540, 30);
+            } else {
+                rect = CGRectMake(120, 12, 170, 30); 
+            }
+            UITextField *textField = [[UITextField alloc] initWithFrame:rect];
+            [textField setTag:VBTextFieldCellTextFieldTag];
+            [textField setReturnKeyType:UIReturnKeyDone];
+            [textField setDelegate:self];
+            [cell.contentView addSubview:textField];
+        }
+        
+        cell.textLabel.text = NSLocalizedString(@"Passcode", nil); 
+        
+        return cell;
+    } else {
+        NSString *cellIdentifier = @"VBButtonCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        }
+        
+        if ([indexPath row] == 0) {
+            cell.textLabel.text = NSLocalizedString(@"Upload", nil);
+        } else {
+            cell.textLabel.text = NSLocalizedString(@"Download", nil); 
+        }
+        return cell;
     }
-    
-    [[cell titleLabel] setText:@"Passcode"];
-    [[cell editField] setDelegate:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passcodeChanged:) name:UITextFieldTextDidChangeNotification object:[cell editField]];
-    
-    return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self footerView].bounds.size.height;
+    if ([indexPath section] == 0) {
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    } else {
+        if ([indexPath row] == 0) {
+            [self uploadNotebook:nil];
+        } else if ([indexPath row] == 1) {
+            [self downloadNotebook:nil];
+        }
+        [tableView deselectRowAtIndexPath:indexPath animated:NO]; 
+    }
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [self footerView]; 
+    if (section == 0) {
+        return NSLocalizedString(@"SyncNotebookWithServer", nil);
+    } else {
+        return @""; 
+    }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    return [self headerView].bounds.size.height;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return [self headerView]; 
+    if (section == 1) {
+        return NSLocalizedString(@"BlankPasscodeFirstTimeSync", nil); 
+    } else {
+        return @"";
+    }
 }
 
 @end

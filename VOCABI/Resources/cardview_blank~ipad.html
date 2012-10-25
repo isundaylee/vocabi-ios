@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+            body {
+                background: black;
+                color: black;
+                font-size: 20px;
+            }
+            
+			p {
+				margin: 0;
+			}
+			
+            .word {
+                font-size: 30px;
+            }
+            
+            .ps {
+				margin: 5px 0 15px 0;
+				color: #7F7F7F;
+            }
+            
+            .meaning {
+            }
+            
+            .desc {
+                margin: 20px 0;
+            }
+            
+            #container {
+                position: absolute;
+                padding: 30px;
+                background-color: white;
+                border: 10px solid white;
+                border-radius: 10px;
+                box-shadow: 0 0 1px 1px #888;
+            }
+			
+			ol {
+				padding: 0 30px;
+			}
+            </style>
+    </head>
+    <body>
+        <div id="container">
+        </div>
+        <script>
+            var ref = document.getElementById('container');
+            ref.style.width = (window.innerWidth - 100) + 'px';
+            ref.style.left = '10px';
+            ref.style.height = (window.innerHeight - 100) + 'px';
+            ref.style.top = '10px';
+            </script>
+    </body>
+</html>

@@ -7,10 +7,12 @@
 //
 
 #import "VBWordStore.h"
+#import "VBServerConfig.h"
 #import "VBConnection.h"
 #import "CoreData/CoreData.h"
 #import "VBWordlist.h"
 #import "VBWord.h"
+#import "VBNotebook.h"
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"
@@ -19,15 +21,15 @@ NSString * const VBWordStoreVersionPrefKey = @"VBWordStoreVersionPrefKey";
 NSString * const VBWordStoreLastCheckVersionPrefKey = @"VBWordStoreLastCheckVersionPrefKey";
 NSString * const VBWordStoreNotedWordsPrefKey = @"VBWordStoreNotedWordsPrefKey";
 
-NSString * const VBWordStoreRemoteBaseURL = @"http://localhost/~Sunday/vocabi-server/";
-
 NSString * const VBWordStoreErrorDomain = @"com.sunday.VOCABI.WordStore";
 
-typedef enum {
-    VBWordStoreInvalidPasscode = -1000,
-    VBWordStoreNotebookUploadingError,
-    VBWordStoreNotebookDownloadingError
-} VBWordStoreErrorCode; 
+NSString * const VBNotebookDidChangeNotification = @"VBNotebookDidChangeNotification";
+
+
+NSString * const VBWordStoreRemoteBaseURL = @"http://ljh.me/vocabi-server/";
+// NSString * const VBWordStoreRemoteBaseURL = @"http://localhost/~Sunday/vocabi-server/";
+
+
 
 @interface VBWordStore ()
 {
@@ -35,8 +37,11 @@ typedef enum {
     NSManagedObjectContext *_context;
     
     AFHTTPClient *_httpClient;
-    NSOperationQueue *_requestOperationQueue; 
+    NSOperationQueue *_requestOperationQueue;
+    
 }
+
+@property (nonatomic, readonly) NSMutableArray *notedWords;
 
 @end
 
@@ -46,6 +51,8 @@ typedef enum {
 @synthesize allWordlists = _allWordlists;
 @synthesize notedWords = _notedWords;
 
+
+
 - (VBWord *)wordWithUID:(NSString *)uid
 {
     for (VBWord *word in _allWords) {
@@ -53,28 +60,6 @@ typedef enum {
     }
     
     return nil; 
-}
-
-- (void)noteWord:(VBWord *)word
-{
-    if ([self isNoted:word]) {
-        NSLog(@"Warning: Noting already noted word. Probable logic hole. ");
-        return;
-    }
-    [_notedWords addObject:[[word uid] copy]];
-    [self reportNotedWordsUpdate];
-}
-
-- (void)unnoteWord:(VBWord *)word
-{
-    [_notedWords removeObject:[word uid]];
-    [self reportNotedWordsUpdate];
-}
-
-- (Boolean) isNoted:(VBWord *)word
-{
-    return [_notedWords containsObject:[word uid]];
-    
 }
 
 - (NSMutableArray *)allWordlists
@@ -139,8 +124,10 @@ typedef enum {
 
 - (void)reportNotedWordsUpdate
 {
+    NSNotification *note = [NSNotification notificationWithName:VBNotebookDidChangeNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotification:note];
     [[NSUserDefaults standardUserDefaults] setObject:_notedWords forKey:VBWordStoreNotedWordsPrefKey];
-    [[NSUserDefaults standardUserDefaults] synchronize]; 
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (id)init
@@ -150,7 +137,7 @@ typedef enum {
         _allWordlists = [[NSMutableArray alloc] init];
         _allWords = [[NSMutableArray alloc] init];
         
-        _notedWords = [[NSUserDefaults standardUserDefaults] objectForKey:VBWordStoreNotedWordsPrefKey];
+        _notedWords = [[NSUserDefaults standardUserDefaults] objectForKey:VBWordStoreNotedWordsPrefKey]; 
         
         if (!_notedWords)
         {
@@ -342,108 +329,19 @@ typedef enum {
     }
 }
 
-- (Boolean)isPasscodeValid:(NSString *)passcode
+- (NSInteger)countOfWordlists
 {
-    NSString *allowedString = @"0123456789ABCDEF";
-    
-    if ([passcode length] != 8) return NO;
-    for (int i=0; i<[passcode length]; i++) {
-        Boolean flag = NO;
-        for (int j=0; j<[allowedString length]; j++) {
-            if ([allowedString characterAtIndex:j] == [passcode characterAtIndex:i]) flag = YES;
-            if (flag) break;
-        }
-        if (!flag) return NO;
-    }
-    
-    return YES;
+    return [[self allWordlists] count];
 }
 
-- (void)uploadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSString *passcode, NSError *error))block
+- (NSArray *)orderedWordlists
 {
-    if (!passcode) passcode = @""; 
-    
-    if (!([passcode isEqualToString:@""] || [self isPasscodeValid:passcode])) {
-        if (block) {
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:@"The passcode supplied is invalid. For first-time sync, leave the passcode blank. " forKey:NSLocalizedDescriptionKey];
-            NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreInvalidPasscode userInfo:dict];
-            block(nil, error);
-        }
-        return;
-    }
-    
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_notedWords];
-    NSString *content = [data base64EncodedString];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:passcode, @"passcode", content, @"content", nil];
-    NSMutableURLRequest *request = [_httpClient requestWithMethod:@"POST" path:@"upload.php" parameters:dict];
-    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
-
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *result = (NSDictionary *)responseObject;
-        NSNumber *number = [result objectForKey:@"result"];
-        if ([number intValue] != 1) {
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:[result objectForKey:@"error"] forKey:NSLocalizedDescriptionKey];
-            NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreNotebookUploadingError userInfo:dict];
-            if (block) block(nil, error);
-        } else {
-            NSString *passcode = [result objectForKey:@"passcode"];
-            if (block) block(passcode, nil);
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (block) block(nil, error);
-    }];
-    
-    [_requestOperationQueue addOperation:operation]; 
+    return [[self allWordlists] sortedArrayUsingSelector:@selector(compare:)];
 }
 
-- (void)downloadNotebookWithPasscode:(NSString *)passcode onCompletion:(void (^)(NSError *))block
+- (NSString *)listTitle
 {
-    if (![self isPasscodeValid:passcode]) {
-        if (block) {
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:@"The passcode supplied is invalid. " forKey:NSLocalizedDescriptionKey];
-            NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreInvalidPasscode userInfo:dict];
-            block(error);
-        }
-        return;
-    }
-    
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:passcode forKey:@"passcode"];
-    NSMutableURLRequest *request = [_httpClient requestWithMethod:@"POST" path:@"download.php" parameters:dict];
-    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *result = (NSDictionary *)responseObject;
-        NSNumber *retcode = [result objectForKey:@"result"];
-        if ([retcode intValue] != 1) {
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:[result objectForKey:@"error"] forKey:NSLocalizedDescriptionKey];
-            NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreNotebookDownloadingError userInfo:dict];
-            if (block) block(error);
-        } else {
-            NSString *content = [result objectForKey:@"content"];
-            NSData *data = [NSData dataFromBase64String:content];
-            _notedWords = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            [self reportNotedWordsUpdate];
-            if (block) block(nil);
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (block) block(error);
-    }];
-    
-    [_requestOperationQueue addOperation:operation];
-}
-
-- (NSInteger)purgeNotebook
-{
-    NSInteger count = 0;
-    NSMutableArray *purged = [NSMutableArray array];
-    
-    for (NSString *uid in _notedWords) {
-        if ([self wordWithUID:uid]) [purged addObject:uid];
-        else count++;
-    }
-    
-    _notedWords = purged;
-    
-    return count; 
+    return NSLocalizedString(@"Wordlists", nil); 
 }
 
 @end

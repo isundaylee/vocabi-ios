@@ -10,13 +10,26 @@
 #import "VBWordStore.h"
 #import "VBWordlist.h"
 #import "VBWord.h"
+#import "VBWordListing.h"
 #import "VBWordsViewController.h"
+#import "VBWordsSplitViewController.h"
 
 @interface VBWordlistViewController ()
 
 @end
 
 @implementation VBWordlistViewController
+
+@synthesize wordlistStore = _wordlistStore;
+@synthesize wordsViewContoller = _wordsViewContoller;
+@synthesize wordsSplitViewController = _wordsSplitViewController; 
+
+- (void)setWordlistStore:(id<VBWordlistListing>)wordlistStore
+{
+    _wordlistStore = wordlistStore;
+    [self.tableView reloadData];
+    [[self navigationItem] setTitle:[wordlistStore listTitle]];
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,16 +41,22 @@
     self = [super initWithStyle:UITableViewStylePlain];
     
     if (self) {
-        [[self navigationItem] setTitle:@"Wordlists"];
-        _wvc = [[VBWordsViewController alloc] init];
+        [[self navigationItem] setTitle:[self.wordlistStore listTitle]];
+        _wordsViewContoller = [[VBWordsViewController alloc] init];
+        if (IS_IPAD)
+            _wordsSplitViewController = [[VBWordsSplitViewController alloc] init];
     }
     
     return self;
 }
 
+- (void)reload
+{
+    [self.tableView reloadData]; 
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
-    [[self tableView] reloadData]; 
 }
 
 - (void)viewDidLoad
@@ -58,16 +77,11 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[VBWordStore sharedStore] allWordlists] count]; 
+    return [self.wordlistStore countOfWordlists];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -79,8 +93,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    VBWordlist *list = [[[VBWordStore sharedStore] allWordlists] objectAtIndex:[indexPath row]];
-    [[cell textLabel] setText:[list title]]; 
+    id<VBWordListing> wordlist = [[self.wordlistStore orderedWordlists] objectAtIndex:[indexPath row]];
+    [[cell textLabel] setText:[wordlist listTitle]];
     
     return cell;
 }
@@ -89,11 +103,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    VBWordlist *list = [[[VBWordStore sharedStore] allWordlists] objectAtIndex:[indexPath row]];
+    id<VBWordListing> wordlist = [[self.wordlistStore orderedWordlists] objectAtIndex:[indexPath row]];
     
-    [_wvc setWordlist:list];
-    
-    [[self navigationController] pushViewController:_wvc animated:YES]; 
+    if (IS_IPAD) {
+        [self.wordsSplitViewController setWordlist:wordlist];
+        [[self navigationController] pushViewController:self.wordsSplitViewController animated:YES];
+    } else {
+        [self.wordsViewContoller setWordlist:wordlist];
+        [self.wordsViewContoller setDisclosing:YES];
+        [[self navigationController] pushViewController:self.wordsViewContoller animated:YES];
+    }
 }
 
 @end

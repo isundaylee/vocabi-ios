@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+            body {
+                background: black;
+                color: black;
+            }
+            
+			p {
+				margin: 0;
+			}
+			
+            .word {
+                font-size: 25px;
+            }
+            
+            .ps {
+				margin: 5px 0 15px 0;
+				color: #7F7F7F;
+            }
+            
+            .meaning {
+                font-size: 14px;
+            }
+            
+            .desc {
+                font-size: 14px;
+                margin: 10px 0;
+            }
+            
+            #container {
+                position: absolute;
+                padding: 10px;
+                background-color: white;
+                border: 10px solid white;
+                border-radius: 10px;
+                box-shadow: 0 0 1px 1px #888;
+            }
+			
+			ol {
+				padding: 0 20px;
+			}
+            </style>
+    </head>
+    <body>
+        <div id="container">
+            <p class="word">#word#</p>
+            <p class="ps">/#ps#/</p>
+            <p class="meaning">#meaning#</p>
+            <p class="desc">说文解字：#desc#</p>
+            #sample#
+        </div>
+        <script>
+            var ref = document.getElementById('container');
+            ref.style.width = (window.innerWidth - 60) + 'px';
+            ref.style.left = '10px';
+            ref.style.height = (window.innerHeight - 60) + 'px';
+            ref.style.top = '10px';
+        </script>
+    </body>
+</html>
