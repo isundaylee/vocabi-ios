@@ -368,8 +368,8 @@
 				15168C621630B7F4003787CF /* iCarousel.m */,
 			);
 			name = iCarousel;
-			path = /Users/Sunday/Programming/XCode/VOCABI/VOCABI/iCarousel;
-			sourceTree = "<absolute>";
+			path = VOCABI/iCarousel;
+			sourceTree = "<group>";
 		};
 		15C87C9D16321EBB0001E4F2 /* AFNetworking */ = {
 			isa = PBXGroup;
