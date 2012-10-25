@@ -13,7 +13,7 @@
 #import "VBConnection.h"
 #import "VBWordStore.h"
 #import "VBWordRateStore.h"
-#import "VBSyncViewController.h"
+#import "VBSettingsViewController.h"
 #import "VBWordsViewController.h"
 #import "VBWordsSplitViewController.h"
 #import "VBRateViewController.h"
@@ -115,6 +115,8 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
         }
     }];
     
+//    [store deactivate]; 
+    
     // Creating views controllers
     
     _tbc = [[UITabBarController alloc] init];
@@ -147,8 +149,8 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     [_nvc setWordlistStore:rateStore];
     [_tbc addChildViewController:[self wrapInNavigationController:_nvc withTitle:NSLocalizedString(@"Notebook", nil) image:[UIImage imageNamed:@"Note"]]];
     
-    _syvc = [[VBSyncViewController alloc] init];
-    [_tbc addChildViewController:[self wrapInNavigationController:_syvc withTitle:NSLocalizedString(@"Sync", nil) image:[UIImage imageNamed:@"Sync"]]];
+    _syvc = [[VBSettingsViewController alloc] init];
+    [_tbc addChildViewController:[self wrapInNavigationController:_syvc withTitle:NSLocalizedString(@"Settings", nil) image:[UIImage imageNamed:@"Sync"]]];
     
     [[self window] setRootViewController:_tbc];
     

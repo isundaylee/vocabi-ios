@@ -24,6 +24,10 @@ extern NSString * const VBNotebookDidChangeNotification;
 
 - (VBWord *)wordWithUID:(NSString *)uid;
 
+- (BOOL)isActivated;
+- (void)activateWithKey:(NSString *)key onCompletion:(void (^)(BOOL activated, NSError *error))block;
+- (void)deactivate; 
+
 @property (nonatomic, readonly) NSMutableArray *allWords;
 @property (nonatomic, readonly) NSMutableArray *allWordlists;
 

@@ -11,7 +11,7 @@
 @class VBWelcomeViewController;
 @class VBWordlistViewController;
 @class VBSearchViewController;
-@class VBSyncViewController;
+@class VBSettingsViewController;
 @class VBWordsViewController;
 @class VBWordsSplitViewController;
 
@@ -22,7 +22,7 @@
     VBWordlistViewController *_wlvc;
     VBSearchViewController *_svc;
     VBWordlistViewController *_nvc;
-    VBSyncViewController *_syvc;
+    VBSettingsViewController *_syvc;
     VBWordsSplitViewController *_nsvc; 
 }
 

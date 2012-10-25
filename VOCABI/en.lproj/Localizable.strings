@@ -47,3 +47,16 @@
 "Easy" = "Easy";
 "NeedsPractice" = "Needs Practice";
 "Tricky" = "Tricky";
+
+"Settings" = "Settings";
+
+"ActivateAllWordlists" = "Activate all wordlists. ";
+"ActivationKeySuppliedInBook" = "The activation key is supplied with the book. ";
+
+"ActivationKey" = "Key";
+
+"Activate" = "Activate";
+
+"ActivationSucceeded" = "Activation Succeeded";
+"ActivationSucceededMessage" = "Thank you for purchasing the book! Please restart the application to unlock all wordlists. ";
+"ActivationFailed" = "Activation Failed";

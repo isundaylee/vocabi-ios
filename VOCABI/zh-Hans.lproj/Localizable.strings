@@ -46,4 +46,17 @@
 "Unrated" = "未分组";
 "Easy" = "简单";
 "NeedsPractice" = "不熟练";
-"Tricky" = "困难"; 
+"Tricky" = "困难";
+
+"Settings" = "设置";
+
+"ActivateAllWordlists" = "激活所有单词表";
+"ActivationKeySuppliedInBook" = "激活密钥随书提供";
+
+"ActivationKey" = "激活密钥";
+
+"Activate" = "激活";
+
+"ActivationSucceeded" = "激活成功";
+"ActivationSucceededMessage" = "感谢您购买本书！请重新启动程序以开启所有单词表。";
+"ActivationFailed" = "激活失败"; 

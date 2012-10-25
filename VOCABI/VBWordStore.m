@@ -17,6 +17,7 @@
 
 NSString * const VBWordStoreVersionPrefKey = @"VBWordStoreVersionPrefKey";
 NSString * const VBWordStoreLastCheckVersionPrefKey = @"VBWordStoreLastCheckVersionPrefKey";
+NSString * const VBWordStoreActivatedPrefKey = @"VBWordStoreActivatedPrefKey";
 NSString * const VBWordStoreNotedWordsPrefKey = @"VBWordStoreNotedWordsPrefKey";
 
 NSString * const VBWordStoreErrorDomain = @"com.sunday.VOCABI.WordStore";
@@ -27,7 +28,9 @@ NSString * const VBNotebookDidChangeNotification = @"VBNotebookDidChangeNotifica
 NSString * const VBWordStoreRemoteBaseURL = @"http://ljh.me/vocabi-server/";
 // NSString * const VBWordStoreRemoteBaseURL = @"http://localhost/~Sunday/vocabi-server/";
 
-
+typedef enum {
+    VBWordStoreActivationError = -1000
+} VBWordStoreErrorCode;
 
 @interface VBWordStore ()
 {
@@ -62,12 +65,29 @@ NSString * const VBWordStoreRemoteBaseURL = @"http://ljh.me/vocabi-server/";
 
 - (NSMutableArray *)allWordlists
 {
-    return [[_allWordlists sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
+    NSMutableArray *list = [[_allWordlists sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
+    if ([self isActivated]) {
+        return list;
+    } else {
+        return [NSMutableArray arrayWithObject:[list objectAtIndex:0]]; 
+    }
 }
 
 - (NSMutableArray *)allWords
 {
-    return [[_allWords sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
+    NSMutableArray *result = [[_allWords sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
+    
+    if ([self isActivated]) {
+        return result;
+    } else {
+        VBWordlist *first = [[self allWordlists] objectAtIndex:0];
+        NSPredicate *pred = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            VBWord *word = (VBWord *)evaluatedObject;
+            return word.wordlist == first;
+        }];
+        [result filterUsingPredicate:pred];
+        return result;
+    }
 }
 
 - (NSMutableArray *)notedWords
@@ -93,7 +113,7 @@ NSString * const VBWordStoreRemoteBaseURL = @"http://ljh.me/vocabi-server/";
 
 + (void)initialize
 {
-    NSMutableDictionary *prefKeys = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:VBWordStoreVersionPrefKey];
+    NSMutableDictionary *prefKeys = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1], VBWordStoreVersionPrefKey, [NSNumber numberWithBool:NO], VBWordStoreActivatedPrefKey, nil];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:prefKeys];
 }
@@ -327,6 +347,17 @@ NSString * const VBWordStoreRemoteBaseURL = @"http://ljh.me/vocabi-server/";
     }
 }
 
+- (BOOL)isActivated
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VBWordStoreActivatedPrefKey];
+}
+
+- (void)activate
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:VBWordStoreActivatedPrefKey];
+    [[NSUserDefaults standardUserDefaults] synchronize]; 
+}
+
 - (NSInteger)countOfWordlists
 {
     return [[self allWordlists] count];
@@ -340,6 +371,42 @@ NSString * const VBWordStoreRemoteBaseURL = @"http://ljh.me/vocabi-server/";
 - (NSString *)listTitle
 {
     return NSLocalizedString(@"Wordlists", nil); 
+}
+
+- (void)activateWithKey:(NSString *)key onCompletion:(void (^)(BOOL, NSError *))block
+{
+    NSDictionary *params = [NSDictionary dictionaryWithObject:key forKey:@"key"];
+    NSMutableURLRequest *request = [_httpClient requestWithMethod:@"POST" path:@"activate.php" parameters:params];
+    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *result = (NSDictionary *)responseObject;
+        NSNumber *number = [result objectForKey:@"result"];
+        if ([number intValue] != 1) {
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[result objectForKey:@"error"] forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:VBWordStoreErrorDomain code:VBWordStoreActivationError userInfo:dict];
+            if (block) {
+                block(NO, error);
+            }
+        } else {
+            [self activate];
+            if (block) {
+                block(YES, nil);
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) {
+            block(NO, error); 
+        }
+    }];
+    
+    [_requestOperationQueue addOperation:operation]; 
+}
+
+- (void)deactivate
+{
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:VBWordStoreActivatedPrefKey];
+    [[NSUserDefaults standardUserDefaults] synchronize]; 
 }
 
 @end

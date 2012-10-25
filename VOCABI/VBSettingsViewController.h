@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VBSyncViewController : UITableViewController <UITextFieldDelegate>
+@interface VBSettingsViewController : UITableViewController <UITextFieldDelegate>
 
 @end
