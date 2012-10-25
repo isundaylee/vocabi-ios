@@ -36,7 +36,7 @@
         _words = [words copy];
         _rateViewController = [[VBRateViewController alloc] init];
         [_rateViewController setDelegate:self]; 
-        UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Note", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(rateWord:)];
+        UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Unrated", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(rateWord:)];
         self.navigationItem.rightBarButtonItem = bbi;
     }
     return self;
@@ -104,8 +104,8 @@
     // Do any additional setup after loading the view from its nib.
     [self carousel].type = iCarouselTypeLinear;
     [self carousel].bounceDistance = 0.1;
-    [self carousel].scrollSpeed = 0.3;
-    [self carousel].decelerationRate = 0.1;
+    [self carousel].scrollSpeed = 1;
+    [self carousel].decelerationRate = 0.99;
 }
 
 - (void)viewDidUnload

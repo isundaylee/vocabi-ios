@@ -2062,8 +2062,8 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
                 _didDrag = YES;
                 if ([self shouldDecelerate])
                 {
-                    _didDrag = NO;
-                    [self startDecelerating];
+                    // _didDrag = NO;
+                    // [self startDecelerating];
                 }
                 if ([_delegate respondsToSelector:@selector(carouselDidEndDragging:willDecelerate:)])
                 {
@@ -2073,21 +2073,25 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
                 }
                 if (!_decelerating && (_scrollToItemBoundary || (_scrollOffset - [self clampedOffset:_scrollOffset]) != 0.0f))
                 {
-                    if (fabsf(_scrollOffset - self.currentItemIndex) < 0.01f)
-                    {
-                        //call scroll to trigger events for legacy support reasons
-                        //even though technically we don't need to scroll at all
-                        [self scrollToItemAtIndex:self.currentItemIndex duration:0.01];
-                    }
-                    else if ([self shouldScroll])
-                    {
-                        NSInteger direction = (int)(_startVelocity / fabsf(_startVelocity));
-                        [self scrollToItemAtIndex:self.currentItemIndex + direction animated:YES];
-                    }
-                    else
-                    {
-                        [self scrollToItemAtIndex:self.currentItemIndex animated:YES];
-                    }
+//                    if (fabsf(_scrollOffset - self.currentItemIndex) < 0.01f)
+//                    {
+//                        //call scroll to trigger events for legacy support reasons
+//                        //even though technically we don't need to scroll at all
+//                        [self scrollToItemAtIndex:self.currentItemIndex duration:0.01];
+//                    }
+//                    else if ([self shouldScroll])
+//                    {
+//                        NSInteger direction = (int)(_startVelocity / fabsf(_startVelocity));
+//                        NSLog(@"%d %d", self.currentItemIndex, direction);
+//                        [self scrollToItemAtIndex:self.currentItemIndex + direction animated:YES];
+//                    }
+//                    else
+//                    {
+//                        [self scrollToItemAtIndex:self.currentItemIndex animated:YES];
+//                    }
+                    // A brute yet effective cheat, allowing only swiping through at most 1 item per swipe
+                    NSInteger index = (_startVelocity > 0 ? ceil(_scrollOffset) : floor(_scrollOffset));
+                    [self scrollToItemAtIndex:[self clampedIndex:index] animated:YES];
                 }
                 else if ([_delegate respondsToSelector:@selector(carouselWillBeginDecelerating:)])
                 {
