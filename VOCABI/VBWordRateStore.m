@@ -8,7 +8,6 @@
 
 #import "VBWordRateStore.h"
 #import "VBWordStore.h"
-#import "VBServerConfig.h"
 #import "VBWord.h"
 #import "VBWordRateCategory.h"
 #import "AFHTTPClient.h"

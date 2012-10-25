@@ -7,12 +7,10 @@
 //
 
 #import "VBWordStore.h"
-#import "VBServerConfig.h"
 #import "VBConnection.h"
 #import "CoreData/CoreData.h"
 #import "VBWordlist.h"
 #import "VBWord.h"
-#import "VBNotebook.h"
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"

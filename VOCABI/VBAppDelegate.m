@@ -16,7 +16,6 @@
 #import "VBSyncViewController.h"
 #import "VBWordsViewController.h"
 #import "VBWordsSplitViewController.h"
-#import "VBNotebook.h"
 #import "VBRateViewController.h"
 
 NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
