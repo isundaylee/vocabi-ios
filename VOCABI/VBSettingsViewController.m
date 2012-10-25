@@ -9,6 +9,7 @@
 #import "VBSettingsViewController.h"
 #import "VBWordStore.h"
 #import "VBWordRateStore.h"
+#import "VBAppDelegate.h"
 
 NSString * const VBNotebookPasscodePrefKey = @"VBNotebookPasscodePrefKey";
 
@@ -260,6 +261,8 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
         if (activated) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ActivationSucceeded", nil) message:NSLocalizedString(@"ActivationSucceededMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
+            VBAppDelegate *appDelegate = (VBAppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appDelegate setExitOnSuspend:YES];
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ActivationFailed", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];

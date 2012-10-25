@@ -22,6 +22,8 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
 
 @implementation VBAppDelegate
 
+@synthesize exitOnSuspend = _exitOnSuspend; 
+
 + (void)initialize
 {
     [super initialize];
@@ -72,6 +74,10 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     
     NSLog(@"Info: Bundle path: %@", [[NSBundle mainBundle] bundlePath]);
     
+    // Disable exit on suspend
+
+    self.exitOnSuspend = NO;
+    
     // Register notification for userdefaults change
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsChanged) name:NSUserDefaultsDidChangeNotification object:nil]; 
@@ -112,6 +118,7 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
         else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WordlistsUpdateFetched", nil) message:NSLocalizedString(@"WordlistsUpdateFetchedMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
+            self.exitOnSuspend = YES; 
         }
     }];
     
@@ -171,6 +178,11 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    if (self.exitOnSuspend) {
+        NSLog(@"Program exited. "); 
+        exit(0);
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

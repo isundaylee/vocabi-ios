@@ -28,4 +28,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (nonatomic) BOOL exitOnSuspend;
+
 @end
