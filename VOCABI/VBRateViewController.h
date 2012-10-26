@@ -7,18 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VBRateViewControllerDelegate.h"
 #import "VBWordRateStore.h"
 
 @class VBRateViewController;
-
-typedef void(^DismissBlock)(VBRateViewController *);
 
 @class VBWord;
 
 @interface VBRateViewController : UITableViewController
 
 @property (nonatomic) VBWord *word;
-@property (nonatomic) id<VBRateViewControllerDelegate> delegate;
+@property (nonatomic, strong) void (^didRateBlock)(VBRateViewController *);
 
 @end

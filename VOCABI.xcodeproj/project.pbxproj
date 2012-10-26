@@ -165,9 +165,7 @@
 		15DE72AD1635238F00E068E4 /* Icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~ipad.png"; sourceTree = "<group>"; };
 		15DE72B11636009A00E068E4 /* VBRateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBRateViewController.h; sourceTree = "<group>"; };
 		15DE72B21636009B00E068E4 /* VBRateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBRateViewController.m; sourceTree = "<group>"; };
-		15DE72B6163614D600E068E4 /* VBRateViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBRateViewControllerDelegate.h; sourceTree = "<group>"; };
 		15DE72B71636265C00E068E4 /* VBWordsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordsViewController.h; sourceTree = "<group>"; };
-		15DE72B81636273E00E068E4 /* VBWordsViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordsViewControllerDelegate.h; sourceTree = "<group>"; };
 		15DE72B916363EAC00E068E4 /* VBWordlistListing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VBWordlistListing.h; sourceTree = "<group>"; };
 		15DE72BA163642C500E068E4 /* VBWordRateStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VBWordRateStore.h; sourceTree = "<group>"; };
 		15DE72BB163642C500E068E4 /* VBWordRateStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VBWordRateStore.m; sourceTree = "<group>"; };
@@ -404,10 +402,8 @@
 		15DE729E163514BA00E068E4 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				15DE72B81636273E00E068E4 /* VBWordsViewControllerDelegate.h */,
 				15DE729F163514F900E068E4 /* VBWordListing.h */,
 				15DE72B916363EAC00E068E4 /* VBWordlistListing.h */,
-				15DE72B6163614D600E068E4 /* VBRateViewControllerDelegate.h */,
 			);
 			name = Protocol;
 			sourceTree = "<group>";

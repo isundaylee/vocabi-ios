@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "VBWordListing.h"
-#import "VBWordsViewControllerDelegate.h"
 
 @class VBCarouselViewController;
 
@@ -17,8 +16,7 @@
 @property (nonatomic) id<VBWordListing> wordlist;
 @property (nonatomic) VBCarouselViewController *carouselViewController;
 @property (nonatomic) BOOL disclosing;
-
-@property (nonatomic) id<VBWordsViewControllerDelegate> delegate; 
+@property (nonatomic, strong) void (^didSelectWordBlock)(VBWordsViewController *wordsViewController, NSUInteger index);
 
 - (void)selectWordAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (UIBarButtonItem *)showCardsButton;

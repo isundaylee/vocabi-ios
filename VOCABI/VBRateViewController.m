@@ -16,6 +16,7 @@
 @implementation VBRateViewController
 
 @synthesize word = _word;
+@synthesize didRateBlock = _didRateBlock;
 
 - (void)setWord:(VBWord *)word
 {
@@ -84,7 +85,11 @@
     
     [rateStore setRate:[indexPath row] forWord:self.word];
 
-    [self.delegate rateViewControllerDidRateWord:self];
+//    [self.delegate rateViewControllerDidRateWord:self];
+    if (self.didRateBlock) {
+        NSLog(@"Calling"); 
+        self.didRateBlock(self);
+    }
 }
 
 @end

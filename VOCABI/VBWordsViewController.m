@@ -22,8 +22,7 @@
 @synthesize wordlist = _wordlist;
 @synthesize carouselViewController = _carouselViewController;
 @synthesize disclosing = _disclosing;
-
-@synthesize delegate = _delegate; 
+@synthesize didSelectWordBlock = _didSelectWordBlock; 
 
 - (void)selectWordAtIndex:(NSUInteger)index animated:(BOOL)animated
 {
@@ -137,8 +136,11 @@
     if (self.disclosing)
         [self.navigationController pushViewController:self.carouselViewController animated:YES];
     
-    [self.delegate wordsViewController:self didSelectWordWithIndex:[indexPath row]];
-    
+//    [self.delegate wordsViewController:self didSelectWordWithIndex:[indexPath row]];
+  
+    if (self.didSelectWordBlock) {
+        self.didSelectWordBlock(self, [indexPath row]);
+    }
 }
 
 - (void)reloadSelectedWordAnimated:(BOOL)animated

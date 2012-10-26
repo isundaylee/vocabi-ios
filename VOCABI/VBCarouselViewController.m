@@ -34,8 +34,20 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _words = [words copy];
+        
         _rateViewController = [[VBRateViewController alloc] init];
-        [_rateViewController setDelegate:self]; 
+        __weak VBCarouselViewController *weakSelf = self;
+        [_rateViewController setDidRateBlock:^(VBRateViewController *rateViewController) {
+            VBCarouselViewController *strongSelf = weakSelf;
+            if (IS_IPAD) {
+                [strongSelf.rateViewPopoverController dismissPopoverAnimated:YES];
+                [strongSelf setRateViewPopoverController:nil];
+            } else {
+                [strongSelf.navigationController popViewControllerAnimated:YES];
+            }
+            [strongSelf carouselDidEndScrollingAnimation:self.carousel];
+        }];
+        
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Unrated", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(rateWord:)];
         self.navigationItem.rightBarButtonItem = bbi;
     }
@@ -51,14 +63,6 @@
 {
     
     
-    if (IS_IPAD) {
-        [self.rateViewPopoverController dismissPopoverAnimated:YES];
-        [self setRateViewPopoverController:nil];
-    } else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    
-    [self carouselDidEndScrollingAnimation:self.carousel];
 }
 
 - (void)rateWord:(id)sender

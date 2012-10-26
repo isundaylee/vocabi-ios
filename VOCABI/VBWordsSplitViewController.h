@@ -8,18 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "VBWordListing.h"
-#import "VBWordsViewControllerDelegate.h"
 
 @class VBWordlist;
 @class VBWordsViewController;
 @class VBCarouselViewController;
 
-@interface VBWordsSplitViewController : UIViewController <VBWordsViewControllerDelegate>
+@interface VBWordsSplitViewController : UIViewController
 
 @property (nonatomic) id<VBWordListing> wordlist;
 @property (nonatomic, readonly) VBWordsViewController *wordsViewController;
 @property (nonatomic, readonly) VBCarouselViewController *carouselViewController;
-
 
 - (void) reload;
 

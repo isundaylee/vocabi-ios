@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
-#import "VBRateViewControllerDelegate.h"
 
-@interface VBCarouselViewController : UIViewController <iCarouselDataSource, iCarouselDelegate, UIPopoverControllerDelegate, VBRateViewControllerDelegate>
+@interface VBCarouselViewController : UIViewController <iCarouselDataSource, iCarouselDelegate, UIPopoverControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet iCarousel *carousel;
 @property (nonatomic, copy) NSArray *words;

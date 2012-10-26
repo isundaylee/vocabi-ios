@@ -23,16 +23,10 @@
 @synthesize wordsViewController = _wordsViewController;
 @synthesize carouselViewController = _carouselViewController;
 
-- (void)wordsViewController:(VBWordsViewController *)controller didSelectWordWithIndex:(NSInteger)index
-{
-    // [self.carouselViewController setWords:[NSArray arrayWithObject:[[self.wordlist orderedWords] objectAtIndex:index]]];
-}
-
 - (void)setWordlist:(id<VBWordListing>)wordlist
 {
     _wordlist = wordlist;
     [self.wordsViewController setWordlist:wordlist];
-    [self.wordsViewController setDelegate:self]; 
     [self.carouselViewController setWords:[NSArray arrayWithObject:[NSNull null]]];
     [[self.carouselViewController rateButton] setEnabled:NO]; 
     self.navigationItem.title = [self.wordlist listTitle];
