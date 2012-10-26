@@ -19,9 +19,61 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
 {
 }
 
+@property (nonatomic, getter = isDownloading) BOOL downloading;
+@property (nonatomic, getter = isUploading) BOOL uploading;
+@property (nonatomic, getter =  isActivating) BOOL activating;
+
 @end
 
 @implementation VBSettingsViewController
+
+@synthesize uploadable = _uploadable;
+@synthesize downloadable = _downloadable;
+@synthesize uploading = _uploading;
+@synthesize downloading = _downloading;
+
+@synthesize activatable = _activatable; 
+@synthesize activating = _activating;
+
+- (void)setUploadable:(BOOL)uploadable
+{
+    _uploadable = uploadable;
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)setUploading:(BOOL)uploading
+{
+    _uploading = uploading;
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)setDownloadable:(BOOL)downloadable
+{
+    _downloadable = downloadable; 
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)setDownloading:(BOOL)downloading
+{
+    _downloading = downloading; 
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)setActivatable:(BOOL)activatable
+{
+    _activatable = activatable;
+    NSIndexPath *path = [NSIndexPath indexPathForRow:1 inSection:2];
+    if ([self.tableView cellForRowAtIndexPath:path])
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)setActivating:(BOOL)activating
+{
+    _activating = activating;
+    NSIndexPath *path = [NSIndexPath indexPathForRow:1 inSection:2];
+    if ([self.tableView cellForRowAtIndexPath:path])
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:path] withRowAnimation:UITableViewRowAnimationNone];
+}
 
 - (id)init
 {
@@ -30,6 +82,9 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
     if (self) {
         self.navigationItem.title = NSLocalizedString(@"Settings", nil);
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldChanged:) name:UITextFieldTextDidChangeNotification object:nil];
+        _downloadable = YES;
+        _uploadable = YES;
+        _activatable = YES; 
     }
     
     return self;
@@ -89,6 +144,9 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
     VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     NSString *passcode = [[self passcodeField] text];
     
+    [self setUploadable:NO];
+    [self setUploading:YES];
+    
     [rateStore uploadWordRatesWithPasscode:passcode onCompletion:^(NSString *passcode, NSError *error) {
         if (error) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncFailed", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
@@ -99,12 +157,17 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SyncSucceeded", nil) message:NSLocalizedString(@"SyncSucceededUploadMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show]; 
         }
+        [self setUploading:NO];
+        [self setUploadable:YES]; 
     }];
 }
 
 - (IBAction)downloadNotebook:(id)sender {
     VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     NSString *passcode = [[self passcodeField] text];
+    
+    [self setDownloadable:NO];
+    [self setDownloading:YES]; 
     
     [rateStore downloadWordRatesWithPasscode:passcode onCompletion:^(NSError *error) {
         if (error) {
@@ -126,6 +189,9 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
             NSLog(@"Info: %d item(s) purged after notebook sync. ", purged);
             [alert show];
         }
+        
+        [self setDownloadable:YES];
+        [self setDownloading:NO];
     }];
 }
 
@@ -201,6 +267,11 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
     return cell;
 }
 
+- (UIColor *)tableViewCellTextColor
+{
+    return [UIColor blackColor];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([indexPath section] == 0) {
@@ -209,11 +280,31 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
         return cell;
     } else if ([indexPath section] == 1) {
         UITableViewCell *cell = [self getButtonCellWithTableView:tableView];
-        
         if ([indexPath row] == 0) {
-            cell.textLabel.text = NSLocalizedString(@"Upload", nil);
+            if (!self.uploading) {
+                cell.textLabel.text = NSLocalizedString(@"Upload", nil);
+            } else {
+                cell.textLabel.text = NSLocalizedString(@"Uploading", nil);
+                NSLog(@"%@", NSLocalizedString(@"Uploading", nil));
+            }
+            
+            if (self.uploadable) {
+                [cell.textLabel setTextColor:[self tableViewCellTextColor]];
+            } else {
+                [cell.textLabel setTextColor:[UIColor grayColor]];
+            }
         } else {
-            cell.textLabel.text = NSLocalizedString(@"Download", nil); 
+            if (!self.downloading) {
+                cell.textLabel.text = NSLocalizedString(@"Download", nil);
+            } else {
+                cell.textLabel.text = NSLocalizedString(@"Downloading", nil);
+            }
+            
+            if (self.downloadable) {
+                [cell.textLabel setTextColor:[self tableViewCellTextColor]];
+            } else {
+                [cell.textLabel setTextColor:[UIColor grayColor]];
+            }
         }
         
         return cell;
@@ -224,7 +315,18 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
             return cell; 
         } else {
             UITableViewCell *cell = [self getButtonCellWithTableView:tableView];
-            cell.textLabel.text = NSLocalizedString(@"Activate", nil);
+            if (self.activating) {
+                cell.textLabel.text = NSLocalizedString(@"Activating", nil);
+            } else {
+                cell.textLabel.text = NSLocalizedString(@"Activate", nil);
+            }
+            
+            if (self.activatable) {
+                [cell.textLabel setTextColor:[self tableViewCellTextColor]];
+            } else {
+                [cell.textLabel setTextColor:[UIColor grayColor]];
+            }
+            
             return cell; 
         }
     }
@@ -235,9 +337,9 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
     if ([indexPath section] == 0) {
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
     } else if ([indexPath section] == 1) {
-        if ([indexPath row] == 0) {
+        if ([indexPath row] == 0 && !self.uploading) {
             [self uploadNotebook:nil];
-        } else if ([indexPath row] == 1) {
+        } else if ([indexPath row] == 1 && !self.downloading) {
             [self downloadNotebook:nil];
         }
         [tableView deselectRowAtIndexPath:indexPath animated:NO]; 
@@ -245,7 +347,8 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
         if ([indexPath row] == 0) {
             [tableView deselectRowAtIndexPath:indexPath animated:NO];
         } else {
-            [self activate];
+            if (self.activatable)
+                [self activate];
             [tableView deselectRowAtIndexPath:indexPath animated:NO];
         }
     }
@@ -257,6 +360,9 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
     if (activationKey == nil) activationKey = @""; 
     VBWordStore *store = [VBWordStore sharedStore];
     
+    [self setActivatable:NO];
+    [self setActivating:YES]; 
+    
     [store activateWithKey:activationKey onCompletion:^(BOOL activated, NSError *error) {
         if (activated) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ActivationSucceeded", nil) message:NSLocalizedString(@"ActivationSucceededMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
@@ -267,6 +373,10 @@ NSInteger const VBTextFieldCellTextFieldTag = 52;
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ActivationFailed", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
         }
+        
+        [self.tableView reloadData]; 
+        [self setActivatable:YES];
+        [self setActivating:NO]; 
     }];
 }
 

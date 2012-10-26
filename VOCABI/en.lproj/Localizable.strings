@@ -37,6 +37,8 @@
 "Passcode" = "Passcode";
 "Upload" = "Upload";
 "Download" = "Download";
+"Uploading" = "Uploading ...";
+"Downloading" = "Downloading ...";
 
 "SyncNotebookWithServer" = "Sync Notebook with Server";
 "BlankPasscodeFirstTimeSync" = "Use blank passcode for first time sync. ";
@@ -56,6 +58,7 @@
 "ActivationKey" = "Key";
 
 "Activate" = "Activate";
+"Activating" = "Activating ...";
 
 "ActivationSucceeded" = "Activation Succeeded";
 "ActivationSucceededMessage" = "Thank you for purchasing the book! Please restart the application to unlock all wordlists. ";
