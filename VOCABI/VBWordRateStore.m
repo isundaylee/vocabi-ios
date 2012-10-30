@@ -55,6 +55,7 @@ NSString * const VBWordStoreWordRatesPrefKey = @"VBWordStoreWordRatesPrefKey";
     }
     
     [self setWordRates:purged];
+    [self reportWordRatesUpdate];
     
     return count;
 }
