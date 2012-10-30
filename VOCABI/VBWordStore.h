@@ -14,7 +14,6 @@
 
 extern NSString * const VBNotebookDidChangeNotification;
 
-
 @interface VBWordStore : NSObject <VBWordlistListing>
 
 + (VBWordStore *)sharedStore;
@@ -26,7 +25,9 @@ extern NSString * const VBNotebookDidChangeNotification;
 
 - (BOOL)isActivated;
 - (void)activateWithKey:(NSString *)key onCompletion:(void (^)(BOOL activated, NSError *error))block;
-- (void)deactivate; 
+- (void)deactivate;
+
+- (NSNumber *)wordRatesVersion; 
 
 @property (nonatomic, readonly) NSMutableArray *allWords;
 @property (nonatomic, readonly) NSMutableArray *allWordlists;

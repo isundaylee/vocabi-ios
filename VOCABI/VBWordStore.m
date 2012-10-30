@@ -409,4 +409,9 @@ typedef enum {
     [[NSUserDefaults standardUserDefaults] synchronize]; 
 }
 
+- (NSNumber *)wordRatesVersion
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:VBWordStoreVersionPrefKey];
+}
+
 @end

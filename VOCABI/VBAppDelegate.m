@@ -73,6 +73,7 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     // Tests
     
     NSLog(@"Info: Bundle path: %@", [[NSBundle mainBundle] bundlePath]);
+    NSLog(@"Info: Wordlists version: %@", [[VBWordStore sharedStore] wordRatesVersion]);
     
     // Disable exit on suspend
 
@@ -91,9 +92,11 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     VBWordStore *store = [VBWordStore sharedStore];
     VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     
-    [store applyUpdate]; 
+    if ([store applyUpdate]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WordlistsUpdated", nil) message:NSLocalizedString(@"WordlistsUpdatedMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
+        [alert show];
+    }
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WordlistsUpdated", nil) message:NSLocalizedString(@"WordlistsUpdatedMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
     NSInteger purged = [rateStore purgeWordRates];
     if (purged > 0) {
         NSString *message;
@@ -107,7 +110,6 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     }
     
     NSLog(@"Info: %d item(s) purged after vocabulary update. ", purged);
-    [alert show];
     
     [store fetchUpdateOnCompletion:^(Boolean updated, NSError *error) {
         if (error) {
