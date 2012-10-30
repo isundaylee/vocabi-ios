@@ -201,7 +201,12 @@ NSString * const VBWordStoreWordRatesPrefKey = @"VBWordStoreWordRatesPrefKey";
     
     for (NSString *uid in [self.wordRates allKeys]) {
         if ([[self.wordRates objectForKey:uid] integerValue] == rate) {
-            [array addObject:[[VBWordStore sharedStore] wordWithUID:uid]];
+            VBWord *word = [[VBWordStore sharedStore] wordWithUID:uid];
+            if (word == nil) {
+                NSAssert(NO, @"Trying to add non-existent word into word rate category. ");
+            } else {
+                [array addObject:word];
+            }
         }
     }
     
