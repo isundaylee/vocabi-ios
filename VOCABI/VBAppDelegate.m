@@ -91,22 +91,23 @@ NSString * const VBWelcomeTabPrefKey = @"VBWelcomeTabPrefKey";
     VBWordStore *store = [VBWordStore sharedStore];
     VBWordRateStore *rateStore = [VBWordRateStore sharedStore];
     
-    if ([store applyUpdate]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WordlistsUpdated", nil) message:NSLocalizedString(@"WordlistsUpdatedMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-        NSInteger purged = [rateStore purgeWordRates];
-        if (purged > 0) {
-            NSString *message;
-            if (purged == 1) {
-                message = [NSString stringWithFormat:NSLocalizedString(@"NotebookChangedMessageSingle", nil), purged];
-            } else {
-                message = [NSString stringWithFormat:NSLocalizedString(@"NotebookChangedMessagePlural", nil), purged];
-            }
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NotebookChanged", nil) message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-            [alert show];
+    [store applyUpdate]; 
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WordlistsUpdated", nil) message:NSLocalizedString(@"WordlistsUpdatedMessage", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
+    NSInteger purged = [rateStore purgeWordRates];
+    if (purged > 0) {
+        NSString *message;
+        if (purged == 1) {
+            message = [NSString stringWithFormat:NSLocalizedString(@"NotebookChangedMessageSingle", nil), purged];
+        } else {
+            message = [NSString stringWithFormat:NSLocalizedString(@"NotebookChangedMessagePlural", nil), purged];
         }
-        NSLog(@"Info: %d item(s) purged after vocabulary update. ", purged);
-        [alert show]; 
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NotebookChanged", nil) message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+        [alert show];
     }
+    
+    NSLog(@"Info: %d item(s) purged after vocabulary update. ", purged);
+    [alert show];
     
     [store fetchUpdateOnCompletion:^(Boolean updated, NSError *error) {
         if (error) {
