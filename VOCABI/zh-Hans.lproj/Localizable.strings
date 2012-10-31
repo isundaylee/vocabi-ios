@@ -37,6 +37,8 @@
 "Passcode" = "生词本编码";
 "Upload" = "上传";
 "Download" = "下载";
+"Uploading" = "正在上传 ...";
+"Downloading" = "正在下载 ...";
 
 "SyncNotebookWithServer" = "同步生词本";
 "BlankPasscodeFirstTimeSync" = "第一次同步时，请将生词本编码留空。";
@@ -56,6 +58,7 @@
 "ActivationKey" = "激活密钥";
 
 "Activate" = "激活";
+"Activating" = "正在激活 ...";
 
 "ActivationSucceeded" = "激活成功";
 "ActivationSucceededMessage" = "感谢您购买本书！请重新启动程序以开启所有单词表。";
