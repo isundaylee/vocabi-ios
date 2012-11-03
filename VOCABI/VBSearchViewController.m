@@ -9,6 +9,7 @@
 #import "VBSearchViewController.h"
 #import "VBCarouselViewController.h"
 #import "VBWordStore.h"
+#import "VBWordRateStore.h"
 #import "VBWord.h"
 
 @interface VBSearchViewController ()
@@ -47,7 +48,9 @@
     }
     
     VBWord *word = (VBWord *)[_filteredWords objectAtIndex:[indexPath row]];
+    VBWordRate rate = [[VBWordRateStore sharedStore] rateForWord:word];
     [[cell textLabel] setText:[word word]];
+    [[cell textLabel] setTextColor:[[VBWordRateStore sharedStore] colorForWordRate:rate]];
     
     return cell; 
 }
